@@ -25,7 +25,7 @@ namespace LoginBancoTeste.Controllers
                 return View(cliente);
             }
 
-            // neste caso aind não logamos como cliente
+            // neste caso ainda não logamos como cliente
             if (id == null)
             {
                 return View();
@@ -103,6 +103,8 @@ namespace LoginBancoTeste.Controllers
                 conta.Saldo += deposito.Valor;
                 this.db.SaveChanges();
 
+                TempData["Sucesso"] = "Seu deposito de R$ " + deposito.Valor + " reais foi realizado com sucesso!";
+
                 return RedirectToAction("Opcoes", new { numero = deposito.NumeroConta });
             }
 
@@ -127,16 +129,41 @@ namespace LoginBancoTeste.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("TransferenciaConfirmacao");
+                Conta contaDestino = this.db.Contas.Find(dados.NumeroContaDestino);
+                if (contaDestino == null)
+                {
+                    ViewBag.Error = "Conta destino inexistente!";
+                    return View(dados);
+                }
+
+                dados.ContaDestino = contaDestino;
+                return View("TransferenciaConfirmacao", dados);
             }
             return View(dados);
         }
 
-        // Função que chama a tela de confirmação dos os dados para o cliente verificar está tudo correto
         [HttpPost]
         public ActionResult TransferenciaConfirmacao(TransferenciaViewModel dados)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                // descrementa da conta 
+                Conta conta = this.db.Contas.Find(dados.NumeroConta);
+                conta.Saldo -= dados.Valor;
+
+                Conta contaDestino = this.db.Contas.Find(dados.NumeroContaDestino);
+                // incrementa na conta destino
+                contaDestino.Saldo += dados.Valor;
+
+                // salva no banco de dados
+                this.db.SaveChanges();
+
+                TempData["Sucesso"] = "Você transferiu R$ " + dados.Valor + " reais para " + contaDestino.Cliente.Nome + " com sucesso!";
+
+                return RedirectToAction("Opcoes", new { numero = dados.NumeroConta });
+            }
+
+            return View(dados);
         }
 
     }

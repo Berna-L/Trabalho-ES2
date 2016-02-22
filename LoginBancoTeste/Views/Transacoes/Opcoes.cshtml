@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Parabens!</strong> @TempData["Sucesso"]
+    </div>
+}
+
+
 <div class="panel panel-info">
     <div class="panel-heading">
         <h2 class="panel-title">Operações</h2>

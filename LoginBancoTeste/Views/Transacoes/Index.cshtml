@@ -19,28 +19,37 @@
 
 @if(Model != null)
 {
-    <p>Bem vindo, @Model.Nome</p>
+    <h4>Bem vindo, @Model.Nome</h4>
 
-    <h3>Selecione a conta que deseja operar</h3>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Tipo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Contas)
-            {
+    <div class="panel panel-info">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Contas</div>
+        <div class="panel-body">
+            <p>Selecione a conta o qual deseja operar: </p>
+        </div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        <a class="btn btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
-                            @Html.DisplayFor(modelItem => item.Numero)
-                        </a>                        
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.TipoDeConta)</td>
+                    <th>Numero</th>
+                    <th>Tipo</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Contas)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
+                                @Html.DisplayFor(modelItem => item.Numero)
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.TipoDeConta)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 }

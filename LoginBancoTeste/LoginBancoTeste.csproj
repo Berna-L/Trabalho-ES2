@@ -192,6 +192,7 @@
     <Content Include="Views\Transacoes\Saque.cshtml" />
     <Content Include="Views\Transacoes\Opcoes.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Transacoes\TransferenciaConfirmacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

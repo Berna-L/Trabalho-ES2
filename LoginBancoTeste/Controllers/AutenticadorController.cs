@@ -29,7 +29,7 @@ namespace LoginBancoTeste.Controllers
 
                 if (cliente == null)
                 {
-                    ViewBag.Mensagem = "Cliente inexistente ou não cadastrado!";
+                    ViewBag.Mensagem = "Cliente não cadastrado!";
                     return View("Formulario");
                 }
 
@@ -41,7 +41,7 @@ namespace LoginBancoTeste.Controllers
                 }
                 else
                 {
-                    ViewBag.Mensagem = "Verifique se os dados estão corretos";
+                    ViewBag.Mensagem = "Senha incorrenta!";
                     return View("Formulario", usuario);
                 }
             }

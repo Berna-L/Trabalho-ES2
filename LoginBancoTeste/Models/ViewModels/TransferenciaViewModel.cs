@@ -15,9 +15,14 @@ namespace LoginBancoTeste.Models.ViewModels
         [Required]
         [Display(Name = "conta destino")]
         public int? NumeroContaDestino { get; set; }
+        
+        // conta na qual iremos mandar os dados
+        public Conta ContaDestino { get; set; }
 
-        // valor a ser transferio de uma conta para outra
+        // valor a ser transferio de uma conta para outra, para realizar transferencia de ser de no minimo 5 reais
         [Required]
-        public double? Valor { get; set; }
+        [Range(5, Double.MaxValue, ErrorMessage = "O valor minimo para realizar transferencia é de 5 reais!")]
+        public double Valor { get; set; }
     }
+
 }
