@@ -19,5 +19,7 @@ namespace LoginBancoTeste.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public System.Data.Entity.DbSet<LoginBancoTeste.Models.Investimento> Investimentoes { get; set; }
     }
 }

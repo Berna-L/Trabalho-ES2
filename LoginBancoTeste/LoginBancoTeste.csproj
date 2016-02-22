@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,12 +122,19 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\InvestimentosController.cs" />
     <Compile Include="Controllers\TransacoesController.cs" />
     <Compile Include="DAL\BancoContext.cs" />
     <Compile Include="DAL\SampleData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602222317485_first.cs" />
+    <Compile Include="Migrations\201602222317485_first.Designer.cs">
+      <DependentUpon>201602222317485_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Investimento.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />
@@ -190,6 +198,11 @@
     <Content Include="Views\Transacoes\Saque.cshtml" />
     <Content Include="Views\Transacoes\Opcoes.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Investimentos\Create.cshtml" />
+    <Content Include="Views\Investimentos\Delete.cshtml" />
+    <Content Include="Views\Investimentos\Details.cshtml" />
+    <Content Include="Views\Investimentos\Edit.cshtml" />
+    <Content Include="Views\Investimentos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -200,6 +213,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602222317485_first.resx">
+      <DependentUpon>201602222317485_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
