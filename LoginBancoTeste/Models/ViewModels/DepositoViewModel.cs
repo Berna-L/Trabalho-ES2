@@ -12,6 +12,7 @@ namespace LoginBancoTeste.Models.ViewModels
         public int? NumeroConta { get; set; }
 
         [Required]
+        [Range(5, Double.MaxValue, ErrorMessage = "O valor minimo para realizar um depósito é de 5 reais!")]
         public double Valor { get; set; }
     }
 }

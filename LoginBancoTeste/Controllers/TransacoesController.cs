@@ -129,6 +129,13 @@ namespace LoginBancoTeste.Controllers
         {
             if (ModelState.IsValid)
             {
+                Conta conta = this.db.Contas.Find(dados.NumeroConta);
+                if (conta.Saldo < dados.Valor)
+                {
+                    ViewBag.Error = "Saldo insuficiente para transferencia de R$ " + dados.Valor + " reais!";
+                    return View(dados);
+                }
+
                 Conta contaDestino = this.db.Contas.Find(dados.NumeroContaDestino);
                 if (contaDestino == null)
                 {
