@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Parabens!</strong> @TempData["Sucesso"]
+    </div>
+}
+
+
 <div class="panel panel-info">
     <div class="panel-heading">
         <h2 class="panel-title">Operações</h2>
@@ -14,10 +23,11 @@
             <div class="col-lg-6">
                 @Html.ActionLink("Saldo", "Saldo", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })               
                 @Html.ActionLink("Saque", "Saque", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
-                @Html.ActionLink("Deposito", "Deposito", new { id = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("Deposito", "Deposito", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
             </div>
             <div class="col-lg-6">                
                 @Html.ActionLink("Transferencia", "Transferencia", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("Extrato", "Extrato", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
                 @Html.ActionLink("Investimentos", "Investimentos", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
             </div>
         </div>
@@ -26,5 +36,8 @@
 </div>
 
 <p>
-    @Html.ActionLink("Voltar", "Index", new { id = Model.Cliente.Id }, new { @class = "btn btn-default" } )
+    <a href="@Url.Action("Index", "Transacoes", new { id = Model.Cliente.Id })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
 </p>
