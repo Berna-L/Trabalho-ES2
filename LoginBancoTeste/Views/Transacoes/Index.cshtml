@@ -8,16 +8,21 @@
 {
     <div class="jumbotron">
             <p class="lead">Acesse sua conta conta realizando o login</p>
-            <p>@Html.ActionLink("Sign in", "Formulario", "Autenticador", null, new { @class = "btn btn-primary", @role = "button" })</p>
+            <p>
+                <a class="btn btn-primary" href="@Url.Action("Formulario","Autenticador")">
+                    <span class="glyphicon glyphicon-off"></span>
+                    Sign in
+                </a>
+            </p>
         </div>
 }
 
-@if (Model != null)
+@if(Model != null)
 {
     <p>Bem vindo, @Model.Nome</p>
 
     <h3>Selecione a conta que deseja operar</h3>
-    <table class="table table-striped">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Numero</th>
@@ -28,7 +33,11 @@
             @foreach (var item in Model.Contas)
             {
                 <tr>
-                    <td>@Html.ActionLink(string.Concat(item.Numero), "Opcoes", new { numero = item.Numero }, new { @class = "list-group-item" })</td>
+                    <td>
+                        <a class="btn btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
+                            @Html.DisplayFor(modelItem => item.Numero)
+                        </a>                        
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.TipoDeConta)</td>
                 </tr>
             }

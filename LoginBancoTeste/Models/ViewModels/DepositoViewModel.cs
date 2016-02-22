@@ -6,15 +6,12 @@ using System.Web;
 
 namespace LoginBancoTeste.Models.ViewModels
 {
-    public class LoginViewModel
+    public class DepositoViewModel
     {
         [Required]
-        [Display(Name = "Login")]
-        public string Username { get; set; }
+        public int? NumeroConta { get; set; }
 
         [Required]
-        [Display(Name = "Senha")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public double Valor { get; set; }
     }
 }
