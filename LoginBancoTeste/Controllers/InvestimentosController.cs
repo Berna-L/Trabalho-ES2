@@ -16,9 +16,12 @@ namespace LoginBancoTeste.Controllers
         private BancoContext db = new BancoContext();
 
         // GET: Investimentos
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            return View(db.Investimentoes.ToList());
+            if (id == null) {
+                return HttpNotFound();
+            }
+            return View(db.Investimentoes.Where(i => i.cliente.Id == id).ToList());
         }
 
         // GET: Investimentos/Details/5
