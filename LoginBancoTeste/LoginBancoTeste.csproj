@@ -133,11 +133,16 @@
     <Compile Include="Migrations\201602222317485_first.Designer.cs">
       <DependentUpon>201602222317485_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602241905505_TipoInvestimento.cs" />
+    <Compile Include="Migrations\201602241905505_TipoInvestimento.Designer.cs">
+      <DependentUpon>201602241905505_TipoInvestimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Investimento.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\TipoInvestimento.cs" />
     <Compile Include="Models\ViewModels\ContaViewModel.cs" />
     <Compile Include="Models\ViewModels\DepositoViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
@@ -305,6 +310,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602222317485_first.resx">
       <DependentUpon>201602222317485_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602241905505_TipoInvestimento.resx">
+      <DependentUpon>201602241905505_TipoInvestimento.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

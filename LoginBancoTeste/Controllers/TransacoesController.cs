@@ -89,7 +89,7 @@ namespace LoginBancoTeste.Controllers
             }
             ViewBag.idCliente = idCliente;
             ViewBag.idConta = idConta;
-            return View(this.db.Investimentoes.Where(i => i.cliente.Id == cliente.Id));
+            return View(this.db.Investimentos.Where(i => i.cliente.Id == cliente.Id));
         }
 
         [HttpPost]
@@ -110,6 +110,7 @@ namespace LoginBancoTeste.Controllers
             invest.cliente = this.db.Clientes.Find(idCliente);
             invest.data = DateTime.Today;
             ViewBag.idConta = idConta;
+            ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(1));
             return View(invest);
         }
 

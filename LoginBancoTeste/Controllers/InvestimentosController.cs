@@ -21,7 +21,7 @@ namespace LoginBancoTeste.Controllers
             if (id == null) {
                 return HttpNotFound();
             }
-            return View(db.Investimentoes.Where(i => i.cliente.Id == id).ToList());
+            return View(db.Investimentos.Where(i => i.cliente.Id == id).ToList());
         }
 
         // GET: Investimentos/Details/5
@@ -31,7 +31,7 @@ namespace LoginBancoTeste.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Investimento investimento = db.Investimentoes.Find(id);
+            Investimento investimento = db.Investimentos.Find(id);
             if (investimento == null)
             {
                 return HttpNotFound();
@@ -54,7 +54,7 @@ namespace LoginBancoTeste.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Investimentoes.Add(investimento);
+                db.Investimentos.Add(investimento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -69,7 +69,7 @@ namespace LoginBancoTeste.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Investimento investimento = db.Investimentoes.Find(id);
+            Investimento investimento = db.Investimentos.Find(id);
             if (investimento == null)
             {
                 return HttpNotFound();
@@ -100,7 +100,7 @@ namespace LoginBancoTeste.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Investimento investimento = db.Investimentoes.Find(id);
+            Investimento investimento = db.Investimentos.Find(id);
             if (investimento == null)
             {
                 return HttpNotFound();
@@ -113,8 +113,8 @@ namespace LoginBancoTeste.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Investimento investimento = db.Investimentoes.Find(id);
-            db.Investimentoes.Remove(investimento);
+            Investimento investimento = db.Investimentos.Find(id);
+            db.Investimentos.Remove(investimento);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

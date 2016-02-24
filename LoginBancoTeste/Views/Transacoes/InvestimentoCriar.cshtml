@@ -23,20 +23,22 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">Valor:</label>
                     <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                        @Html.DropDownList("tipos", null, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.tipo_invest, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Valor:</label>
+                    <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                         @Html.EditorFor(model => model.valor_ini, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor a investir" } })
                     </div>
                     @Html.ValidationMessageFor(model => model.valor_ini, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2">Data:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        @Html.EditorFor(model => model.data, new { htmlAttributes = new { @class = "form-control datepicker", @value = DateTime.Now.ToShortDateString(), @startDate = DateTime.Now.ToString("yyyy-MM-dd") } })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.data, "", new { @class = "text-danger" })
-                </div>
+           
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-md-2">
@@ -60,4 +62,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('#sandbox-container input').datepicker({
+            format: "dd/mm/yyyy",
+            startDate: 0,
+            endDate: "+60d",
+            todayBtn: "linked",
+            daysOfWeekDisabled: "0,6",
+            todayHighlight: true
+        });
+    </script>
 }

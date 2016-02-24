@@ -14,7 +14,7 @@ namespace LoginBancoTeste.Models {
 
         [Required]
         [Display(Name = "Tipo de investimento")]
-        public char tipo_invest { get; set; }
+        public TipoInvestimento tipo_invest { get; set; }
 
         [Required]
         [Display(Name = "Valor inicial")]
@@ -32,5 +32,6 @@ namespace LoginBancoTeste.Models {
         [DataType(DataType.Date)]
         [Display(Name = "Data de cancelamento")]
         public DateTime data_canc { get; set; }
+
     }
 }

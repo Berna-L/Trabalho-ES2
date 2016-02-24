@@ -207,7 +207,19 @@ namespace LoginBancoTeste.DAL
                 }
             };
 
+            var tiposInvestimento = new List<TipoInvestimento> {
+                new TipoInvestimento {
+                    nome = "Tipo 1",
+                    jurosDia = 1.000845
+                },
+                new TipoInvestimento {
+                    nome = "Tipo 2",
+                    jurosDia = 1.001094
+                }
+            };
+
             clientes.ForEach(c => context.Clientes.Add(c));
+            tiposInvestimento.ForEach(t => context.TiposInvestimento.Add(t));
             context.SaveChanges();
 
             //var usuarios = new List<ContaDeUsuario> {

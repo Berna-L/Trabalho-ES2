@@ -14,12 +14,12 @@ namespace LoginBancoTeste.DAL
 
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Investimento> Investimentos { get; set; }
+        public DbSet<TipoInvestimento> TiposInvestimento { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
-        public System.Data.Entity.DbSet<LoginBancoTeste.Models.Investimento> Investimentoes { get; set; }
     }
 }
