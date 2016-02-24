@@ -25,9 +25,11 @@ namespace LoginBancoTeste.Models {
         public double valor_acc { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Data de início")]
         public DateTime data{ get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Data de cancelamento")]
         public DateTime data_canc { get; set; }
     }

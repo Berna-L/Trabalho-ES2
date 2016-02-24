@@ -77,24 +77,39 @@ namespace LoginBancoTeste.Controllers
         }
 
         [Authorize]
-        public ActionResult Investimentos(int? idCliente)
+        public ActionResult Investimentos(int? idCliente, int? idConta)
         {
-            if (idCliente == null) {
-                return HttpNotFound("deu id cliente nulo mermão");
+            if (idCliente == null || idConta == null) {
+                return HttpNotFound("deu id nulo mermão");
             }
             Cliente cliente = this.db.Clientes.Find(idCliente);
-            if (cliente == null) {
-                return HttpNotFound("deu cliente nulo rapá");
+            Conta conta = this.db.Contas.Find(idConta);
+            if (cliente == null || conta == null) {
+                return HttpNotFound("deu objeto nulo rapá");
             }
-            ViewBag[idCliente] = idCliente;
+            ViewBag.idCliente = idCliente;
+            ViewBag.idConta = idConta;
             return View(this.db.Investimentoes.Where(i => i.cliente.Id == cliente.Id));
         }
 
         [HttpPost]
         public ActionResult Investimentos(Investimento invest) {
             if (invest == null) {
+                HttpNotFound();
+            }
+            return View(invest);
+        }
+
+
+        [Authorize]
+        public ActionResult InvestimentoCriar(int? idCliente, int? idConta) {
+            if (idCliente == null || idConta == null) {
                 return HttpNotFound();
             }
+            Investimento invest = new Investimento();
+            invest.cliente = this.db.Clientes.Find(idCliente);
+            invest.data = DateTime.Today;
+            ViewBag.idConta = idConta;
             return View(invest);
         }
 

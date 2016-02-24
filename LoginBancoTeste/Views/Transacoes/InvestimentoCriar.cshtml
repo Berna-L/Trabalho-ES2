@@ -1,0 +1,63 @@
+﻿@model LoginBancoTeste.Models.Investimento
+
+@{
+    ViewBag.Title = "InvestimentoCriar";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+
+}
+
+
+@using (Html.BeginForm()) {
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">Novo investimento</h2>
+        </div>
+        <div class="panel-body">
+
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Valor:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                        @Html.EditorFor(model => model.valor_ini, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor a investir" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.valor_ini, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Data:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        @Html.EditorFor(model => model.data, new { htmlAttributes = new { @class = "form-control datepicker", @value = DateTime.Now.ToShortDateString(), @startDate = DateTime.Now.ToString("yyyy-MM-dd") } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.data, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-md-2">
+                        <button type="submit" class="btn btn-success" value="Salvar">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Ok
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- form-control -->
+
+        </div><!-- panel-body Fim -->
+    </div>
+}
+<p>
+    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = ViewBag.idCliente, idConta = ViewBag.idConta })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
