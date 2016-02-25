@@ -69,9 +69,51 @@ namespace LoginBancoTeste.Controllers
         }
 
         [Authorize]
-        public ActionResult Saque()
+        public ActionResult Saque(int? numero)
         {
-            return View();
+            if (numero == null)
+            {
+                return View();
+            }
+            Conta conta = this.db.Contas.Find(numero);
+            if (conta == null)
+            {
+                return HttpNotFound();
+            }
+                        
+            return View(conta);
+        }
+        [Authorize]
+        public ActionResult SaqueConfirm(int? numero, double valor)
+        {
+            String resp = "";
+            
+            
+            if (numero == null)
+            {
+                return View();
+            }
+            Conta conta = this.db.Contas.Find(numero);
+            if (conta == null)
+            {
+                return HttpNotFound();
+            }
+            if (conta.Saldo<valor)
+            {
+                resp = "Saldo insuficiente.";
+            }
+            else
+            {
+                resp = "Saque efetuado com sucesso.";
+                conta.Saldo -= valor;
+                db.SaveChanges();
+                
+
+            }
+
+
+            ViewBag.Sucesso = resp;
+            return View(conta);
         }
 
         [Authorize]

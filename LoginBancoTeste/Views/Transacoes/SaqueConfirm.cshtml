@@ -1,0 +1,17 @@
+﻿@model LoginBancoTeste.Models.Conta
+@{
+    ViewBag.Title = "Saque";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<h2>Saque</h2>
+
+
+    
+        @if (ViewBag.Sucesso != null)
+        { <p>@ViewBag.Sucesso</p> }
+        
+            
+        @Html.ActionLink("Retornar", "Opcoes", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
+
+   
