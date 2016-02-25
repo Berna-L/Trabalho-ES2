@@ -24,7 +24,7 @@
                     <label class="control-label col-md-2">Valor:</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                        @Html.DropDownList("tipos", null, new { @id = "tipoInvestimento", @class = "form-control" }).
+                        @Html.DropDownList("tipos", null, new { @id = "tipoInvestimento", @class = "form-control" })
                     </div>
                     @Html.ValidationMessageFor(model => model.tipo_invest, "", new { @class = "text-danger" })
                 </div>
