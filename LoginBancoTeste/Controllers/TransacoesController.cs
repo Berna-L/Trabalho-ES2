@@ -114,6 +114,15 @@ namespace LoginBancoTeste.Controllers
             return View(invest);
         }
 
+        public PartialViewResult DetalhesNovoInvestimento(int? idTipo, double? valor) {
+            TipoInvestimento tipo = this.db.TiposInvestimento.Find(idTipo);
+            ViewBag.jurosMes = tipo.jurosDia * 30 * 100;
+            ViewBag.jurosAno = tipo.jurosDia * 365 * 100;
+            ViewBag.rendMes =TipoInvestimentoAux.CalcularRendimento(valor.GetValueOrDefault(), tipo, DateTime.Today, DateTime.Today.AddMonths(1));
+            ViewBag.rendAno = LoginBancoTeste.Models.TipoInvestimentoAux.CalcularRendimento(valor.GetValueOrDefault(), tipo, DateTime.Today, DateTime.Today.AddYears(1));
+            return PartialView();
+        }
+
         public ActionResult Deposito(int? numero)
         {
             if (numero == null)

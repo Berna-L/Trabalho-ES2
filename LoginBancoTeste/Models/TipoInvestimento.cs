@@ -26,5 +26,14 @@ namespace LoginBancoTeste.Models {
             return invest.valor_ini * Math.Pow(invest.tipo_invest.jurosDia, Math.Floor(periodo.TotalDays));
         }
 
+        public static double CalcularRendimento(double valor, TipoInvestimento tipo, DateTime data_ini, DateTime data_final) {
+            if (data_ini > data_final) {
+                return -1;
+            }
+            TimeSpan periodo = data_final - data_ini;
+            return valor * Math.Pow(tipo.jurosDia, Math.Floor(periodo.TotalDays));
+        }
+
+
     }
 }
