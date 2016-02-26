@@ -1,0 +1,58 @@
+﻿@model LoginBancoTeste.Models.Estoque
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Estoque</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdNotas10)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdNotas10)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdNotas20)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdNotas20)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdNotas50)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdNotas50)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdNotas100)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdNotas100)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdCheques)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdCheques)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EstoqueID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

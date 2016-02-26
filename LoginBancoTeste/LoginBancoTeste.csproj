@@ -122,6 +122,7 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\EstoquesController.cs" />
     <Compile Include="Controllers\TransacoesController.cs" />
     <Compile Include="DAL\BancoContext.cs" />
     <Compile Include="DAL\SampleData.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\Estoque.cs" />
     <Compile Include="Models\ViewModels\ContaViewModel.cs" />
     <Compile Include="Models\ViewModels\DepositoViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
@@ -196,6 +198,11 @@
     <Content Include="Views\Transacoes\SaqueConfirm.cshtml" />
     <Content Include="Views\Transacoes\TransferenciaConfirmacao.cshtml" />
     <Content Include="Views\Transacoes\Extrato.cshtml" />
+    <Content Include="Views\Estoques\Create.cshtml" />
+    <Content Include="Views\Estoques\Delete.cshtml" />
+    <Content Include="Views\Estoques\Details.cshtml" />
+    <Content Include="Views\Estoques\Edit.cshtml" />
+    <Content Include="Views\Estoques\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

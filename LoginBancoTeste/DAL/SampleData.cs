@@ -210,17 +210,6 @@ namespace LoginBancoTeste.DAL
             clientes.ForEach(c => context.Clientes.Add(c));
             context.SaveChanges();
 
-            //var usuarios = new List<ContaDeUsuario> {
-            //    new ContaDeUsuario 
-            //    {
-            //        Username = "joao@banco.br",
-            //        Password = "senha123",
-            //        TipoDeUsuario = TipoDeUsuario.FUNCIONARIO
-            //    }                
-            //};
-            //usuarios.ForEach(f => context.Usuarios.Add(f));
-            //context.SaveChanges();
-
             base.Seed(context);
         }
     }

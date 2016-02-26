@@ -88,8 +88,7 @@ namespace LoginBancoTeste.Controllers
         [Authorize]
         public ActionResult SaqueConfirm(int? numero, double valor)
         {
-            String resp = "";
-            
+            String resp = "";            
             
             if (numero == null)
             {
@@ -106,6 +105,22 @@ namespace LoginBancoTeste.Controllers
             }
             else
             {
+                double valorTemp = (valor % 100);
+                Estoque est = this.db.Estoque.First();
+                valor = valor - valorTemp;
+                EstoqueViewModel respEst = new EstoqueViewModel();
+                if (valor/100<= est.QtdNotas100)
+                {
+                    respEst.QtdNotas100 = (int)valor/100;
+                }
+                else
+                {
+                    respEst.QtdNotas100 = (int)(valor / 100) - est.QtdNotas100;
+                    valorTemp += valor - (respEst.QtdNotas100 * 100);
+                }
+                valorTemp = valor % 20;
+                valor = valor - valorTemp;
+                
                 resp = "Saque efetuado com sucesso.";
                 conta.Saldo -= valor;
                 db.SaveChanges();             
