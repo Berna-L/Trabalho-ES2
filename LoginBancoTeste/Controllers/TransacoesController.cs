@@ -173,5 +173,10 @@ namespace LoginBancoTeste.Controllers
             return View(dados);
         }
 
+        public ActionResult Extrato()
+        {
+            return View();
+        }
+
     }
 }

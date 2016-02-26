@@ -193,6 +193,7 @@
     <Content Include="Views\Transacoes\Opcoes.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Transacoes\TransferenciaConfirmacao.cshtml" />
+    <Content Include="Views\Transacoes\Extrato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
