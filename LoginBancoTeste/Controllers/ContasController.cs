@@ -127,9 +127,15 @@ namespace LoginBancoTeste.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Conta conta = db.Contas.Find(id);
+
+            // passa a referencia do id do cliente antes de remove-lo do banco de dados
+            int clienteId = conta.Cliente.Id;
+
+            // remove a conta e salva o banco de dados
             db.Contas.Remove(conta);
             db.SaveChanges();
-            return RedirectToAction("Index", "Clientes");
+
+            return RedirectToAction("Details", "Clientes", new { id = clienteId });
         }
 
         protected override void Dispose(bool disposing)

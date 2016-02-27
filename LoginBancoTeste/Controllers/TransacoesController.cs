@@ -133,6 +133,7 @@ namespace LoginBancoTeste.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //instancia o ViewModel para que o cliente possa preencher os dados da transferencia
             TransferenciaViewModel dados = new TransferenciaViewModel();
             dados.NumeroConta = numero;
 
@@ -206,9 +207,12 @@ namespace LoginBancoTeste.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);;
             }
+            Conta conta = this.db.Contas.Find(numero);
+
             ExtratoModelView extrato = new ExtratoModelView();
-            extrato.Extrato = this.db.Contas.Find(numero).Extrato;
+            extrato.Extrato = conta.Extrato;
             extrato.NumeroConta = numero;
+            extrato.NomeCliente = conta.Cliente.Nome;
 
             if (extrato == null)
             {

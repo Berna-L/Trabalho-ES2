@@ -4,42 +4,59 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-<h2>Extrato</h2>
+<div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Extrato</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>Nome:</strong> @Model.NomeCliente <br />
+                <strong>Data:</strong> @DateTime.Now.ToString("dd/MM/yyyy")
+            </div>
+            <div class="col-md-6">
+                <strong>Conta:</strong> @Model.NumeroConta <br />
+                <strong>Horário:</strong> @DateTime.Now.ToString("h:mm tt")
+            </div>
+        </div>
+    </div>
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            Data
-        </th>
-        <th>
-            Lançamento
-        </th>
-        <th>
-            Valor(R$)
-        </th>
-        <th>
-            Saldo(R$)
-        </th>
-    </tr>
-
-    @foreach(var item in Model.Extrato)
-    {
+    <!-- Table -->
+    <table class="table table-striped">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lancamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SaldoAtual)
-            </td>
+            <th>
+                Data
+            </th>
+            <th>
+                Lançamento
+            </th>
+            <th>
+                Valor(R$)
+            </th>
+            <th>
+                Saldo(R$)
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model.Extrato)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lancamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor, new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaldoAtual)
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
 
 <p>
     <a href="@Url.Action("Opcoes", "Transacoes", new { numero = Model.NumeroConta })" class="btn btn-default">
