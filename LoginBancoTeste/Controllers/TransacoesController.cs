@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LoginBancoTeste.Models.ViewModels;
 
 namespace LoginBancoTeste.Controllers
 {
@@ -83,6 +84,24 @@ namespace LoginBancoTeste.Controllers
         public ActionResult Deposito()
         {
             return View();
+        }
+
+        public ActionResult EmissaoCheque()
+        {
+            EmChequeViewModel ecvm = new EmChequeViewModel();
+            return View(ecvm);
+        }
+
+        [HttpPost]
+        public ActionResult ImpCheques(EmChequeViewModel ecvm)
+        {
+            if (ecvm.qtdCheque < 4 || ecvm.qtdCheque > 20) {
+                Response.Write(ecvm.qtdCheque);
+                return RedirectToAction("EmissaoCheque");
+            }
+            else
+                //Gerar pdf do cheque aqui
+                return View();
         }
 
         public ActionResult Transferencia()

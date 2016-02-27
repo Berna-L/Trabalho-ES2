@@ -1,0 +1,38 @@
+﻿@model LoginBancoTeste.Models.ViewModels.EmChequeViewModel
+@{
+    ViewBag.Title = "Cheque";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Emissao de Cheque</title>
+</head>
+<body>
+    @using (Ajax.BeginForm("ImpCheques", "Transacoes", new AjaxOptions { UpdateTargetId = "divQtdCheques" }))
+    {
+    <fieldset>
+        <h2 align="center">Emissão de Cheques</h2>
+        <div class="form-group" style="font-size:large; margin-top:10%" has-warning>
+            <label for="folhas">Digite a quantidade de folhas para impressão (4 a 20)</label>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.qtdCheque)
+            </div>
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.qtdCheque, "", new { @class = "text-danger" })
+            </div>
+            <button input type="submit" class="btn" id="confirmar"> Confirmar </button>         
+        </div>
+
+        
+    </fieldset>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>
