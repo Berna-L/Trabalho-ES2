@@ -47,6 +47,33 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MigraDoc.DocumentObjectModel">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.DocumentObjectModel.resources">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\de\MigraDoc.DocumentObjectModel.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering.resources">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\de\MigraDoc.Rendering.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering.resources">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\de\MigraDoc.RtfRendering.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.resources">
+      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\de\PdfSharp.resources.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -128,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cheque.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />

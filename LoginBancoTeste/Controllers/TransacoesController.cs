@@ -6,6 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LoginBancoTeste.Models.ViewModels;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 
 namespace LoginBancoTeste.Controllers
 {
@@ -95,13 +98,38 @@ namespace LoginBancoTeste.Controllers
         [HttpPost]
         public ActionResult ImpCheques(EmChequeViewModel ecvm)
         {
-            if (ecvm.qtdCheque < 4 || ecvm.qtdCheque > 20) {
-                Response.Write(ecvm.qtdCheque);
+            if (ecvm.qtdCheque < 4 || ecvm.qtdCheque > 20)
+            {
                 return RedirectToAction("EmissaoCheque");
             }
-            else
-                //Gerar pdf do cheque aqui
-                return View();
+            else {
+                for (int i = 0; i < ecvm.qtdCheque; i++) {
+                    Cheque cheque = new Cheque();
+                    //Criar detalhes dos cheques aqui
+
+                    PdfDocument pdf = new PdfDocument();
+                    PdfPage pdfPage = pdf.AddPage();
+                    XGraphics graph = XGraphics.FromPdfPage(pdfPage);
+                    XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+                    graph.DrawString("Exemplo de cheque", font, XBrushes.Black, new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+                    String saida = ecvm.dirSaida + "cheque" + i+1 + ".pdf";
+
+                    try{
+                        pdf.Save(saida);
+                        ecvm.msgControle = "Arquivo gerado";
+                    }
+                    catch (UnauthorizedAccessException uae) {
+                        ecvm.msgControle = "Impossível gerar arquivo no diretório solicitado";
+                        return View(ecvm);
+                    }
+                    catch (System.IO.IOException io) {
+                        ecvm.msgControle = "Erro na escrita dos dados";
+                        return View(ecvm);
+                    }
+                }
+
+                return View(ecvm);
+            }
         }
 
         public ActionResult Transferencia()

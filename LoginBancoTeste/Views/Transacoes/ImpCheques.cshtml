@@ -1,7 +1,16 @@
-﻿
+﻿@model LoginBancoTeste.Models.ViewModels.EmChequeViewModel
 @{
     ViewBag.Title = "ImpCheques";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-<h2>ImpCheques</h2>
+<h2 align="center">ImpCheques</h2>
+<br><br>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <h3 align ="center">@Html.DisplayFor(model => model.msgControle)</h3>
+    </fieldset>
+}
+
 

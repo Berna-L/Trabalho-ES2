@@ -17,12 +17,17 @@
     <fieldset>
         <h2 align="center">Emissão de Cheques</h2>
         <div class="form-group" style="font-size:large; margin-top:10%" has-warning>
-            <label for="folhas">Digite a quantidade de folhas para impressão (4 a 20)</label>
+            <label>Digite a quantidade de folhas para impressão (4 a 20)</label>
             <div class="editor-field">
                 @Html.EditorFor(model => model.qtdCheque)
             </div>
             <div class="text-danger">
                 @Html.ValidationMessageFor(model => model.qtdCheque, "", new { @class = "text-danger" })
+            </div>
+            <br>
+            <label>Digite o diretório de saída</label>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.dirSaida)
             </div>
             <button input type="submit" class="btn" id="confirmar"> Confirmar </button>         
         </div>
