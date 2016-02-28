@@ -1,0 +1,65 @@
+﻿@model LoginBancoTeste.Models.ViewModels.EstatisticasViewModel
+@{
+    ViewBag.Title = "Estatisticas";
+}
+
+<h2>Estatisticas</h2>
+
+@section Scripts {
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        //Responsável por carregar a engine de criação do Google Chart
+        google.load('visualization', '1.0', { 'packages': ['corechart'] });
+
+        $(document).ready(function () {
+
+            getEstatisticas();
+            //Esse método é responsável por chamar o API que retornará os dados
+            //em formato JSON
+            function getEstatisticas() {
+                $.ajax({
+                    url: '@Url.Action("GetEstatisticas")',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        drawChartCallBack(data);
+                    },
+                    error: function () {
+                        alert('Erro ao carregar o Google Chart');
+                    }
+                });
+            }
+
+            // Método responsável por carregar todas as informações no gráfico.
+            function drawChartCallBack(num) {
+
+                // Create the data table.
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Conta');
+                data.addColumn('number', 'Quantidade');
+
+                data.addRow(['Contas corrente', num.ContasCorrente]);
+                data.addRow(['Contas poupança', num.ContasPoupanca]);
+
+                // Opções do gráfico
+                var options = {
+                    'title': 'Contas',
+                    'width': 740,
+                    'height': 400
+                };
+
+                // Instancia o gráfico à partir de elementos na página.
+                // No caso será redenrizado em um elemento chamado
+                // divGoogleChart que por sua vez é uma div.
+                var chart = new google.visualization.PieChart(document.getElementById('divGoogleChart'));
+
+                chart.draw(data, options);
+            }
+
+        });
+
+    </script>
+
+}
+
+<div id="divGoogleChart" style="width:740px;"></div>
