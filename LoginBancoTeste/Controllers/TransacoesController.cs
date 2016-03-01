@@ -106,21 +106,30 @@ namespace LoginBancoTeste.Controllers
             if (idCliente == null || idConta == null) {
                 return HttpNotFound();
             }
-            Investimento invest = new Investimento();
+            InvestimentoViewModel invest = new InvestimentoViewModel();
             invest.cliente = this.db.Clientes.Find(idCliente);
             invest.data = DateTime.Today;
-            ViewBag.idConta = idConta;
-            ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(1));
+            invest.contaADebitar = this.db.Contas.Find(idConta);
+            ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(2));
             return View(invest);
         }
 
-        public PartialViewResult DetalhesNovoInvestimento(int? idTipo, double? valor) {
-            TipoInvestimento tipo = this.db.TiposInvestimento.Find(idTipo);
-            ViewBag.jurosMes = tipo.jurosDia * 30 * 100;
-            ViewBag.jurosAno = tipo.jurosDia * 365 * 100;
-            ViewBag.rendMes =TipoInvestimentoAux.CalcularRendimento(valor.GetValueOrDefault(), tipo, DateTime.Today, DateTime.Today.AddMonths(1));
-            ViewBag.rendAno = LoginBancoTeste.Models.TipoInvestimentoAux.CalcularRendimento(valor.GetValueOrDefault(), tipo, DateTime.Today, DateTime.Today.AddYears(1));
-            return PartialView();
+        [HttpPost]
+        public ActionResult InvestimentoCriar(InvestimentoViewModel invest) {
+            if (ModelState.IsValid) {
+                Console.WriteLine("test");
+                return RedirectToAction("InvestimentoCriarConf", invest);
+            }
+            ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(2));
+            return View(invest);
+        }
+
+        public ActionResult InvestimentoCriarConf(Investimento invest, int idConta) {
+            ViewBag.JurosMes = ((invest.tipo_invest.jurosDia * 30) - 1) * 100;
+            ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(invest, DateTime.Today, DateTime.Today.AddMonths(1));
+            ViewBag.JurosAno = ((invest.tipo_invest.jurosDia * 365) - 1) * 100;
+            ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(invest, DateTime.Today, DateTime.Today.AddYears(1));
+            return View(invest);
         }
 
         public ActionResult Deposito(int? numero)
@@ -143,9 +152,7 @@ namespace LoginBancoTeste.Controllers
                 Conta conta = this.db.Contas.Find(deposito.NumeroConta);
                 conta.Saldo += deposito.Valor;
                 this.db.SaveChanges();
-
                 TempData["Sucesso"] = "Seu deposito de R$ " + deposito.Valor + " reais foi realizado com sucesso!";
-
                 return RedirectToAction("Opcoes", new { numero = deposito.NumeroConta });
             }
 
