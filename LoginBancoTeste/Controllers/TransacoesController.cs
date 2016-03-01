@@ -105,27 +105,19 @@ namespace LoginBancoTeste.Controllers
             }
             else
             {
-                double valorTemp = (valor % 100);
-                Estoque est = this.db.Estoque.First();
-                valor = valor - valorTemp;
-                EstoqueViewModel respEst = new EstoqueViewModel();
-                if (valor/100<= est.QtdNotas100)
+                EstoqueViewModel qtdNotas = calcularNotas(valor);
+                if (!qtdNotas.sucesso)
                 {
-                    respEst.QtdNotas100 = (int)valor/100;
+                    resp = "Noatas insuficientes no caixa, escolha outro valor.";
                 }
                 else
                 {
-                    respEst.QtdNotas100 = (int)(valor / 100) - est.QtdNotas100;
-                    valorTemp += valor - (respEst.QtdNotas100 * 100);
+                    resp = "Saque efetuado com sucesso.";
+                    conta.Saldo -= valor;
+                    db.SaveChanges();
                 }
-                valorTemp = valor % 20;
-                valor = valor - valorTemp;
-                
-                resp = "Saque efetuado com sucesso.";
-                conta.Saldo -= valor;
-                db.SaveChanges();             
             }
-
+            
             ViewBag.Sucesso = resp;
             return View(conta);
         }
@@ -230,6 +222,79 @@ namespace LoginBancoTeste.Controllers
         public ActionResult Extrato()
         {
             return View();
+        }
+
+        public EstoqueViewModel calcularNotas(double valor)
+        {
+
+            double valorTemp = (valor % 100);
+            Estoque est = this.db.Estoque.First();
+            valor = valor - valorTemp;
+            EstoqueViewModel respEst = new EstoqueViewModel();
+            int temp = (int)valor / 100;
+            //Calculo das notas de 100
+            if (temp <= est.QtdNotas100)
+            {
+                respEst.QtdNotas100 = temp;
+                est.QtdNotas100 -= temp;
+            }
+            else
+            {
+                respEst.QtdNotas100 = est.QtdNotas100;
+                est.QtdNotas100 =0;
+                valorTemp += valor - (respEst.QtdNotas100 * 100);
+            }
+            //Calculo das notas de 50
+            valorTemp = valor % 50;
+            valor = valor - valorTemp;
+
+            temp = (int)valor / 50;
+
+            if (temp <= est.QtdNotas50)
+            {
+                respEst.QtdNotas50 = temp;
+                est.QtdNotas50 -= temp;
+            }
+            else
+            {
+                respEst.QtdNotas50 = est.QtdNotas50;
+                est.QtdNotas50 = 0;
+                valorTemp += valor - (respEst.QtdNotas50 * 50);
+            }
+            //Calculo das notas de 20
+            valorTemp = valor % 20;
+            valor = valor - valorTemp;
+
+            temp = (int)valor / 20;
+
+            if (temp <= est.QtdNotas20)
+            {
+                respEst.QtdNotas20 = temp;
+                est.QtdNotas20 -= temp;
+            }
+            else
+            {
+                respEst.QtdNotas20 = est.QtdNotas20;
+                est.QtdNotas20 = 0;
+                valorTemp += valor - (respEst.QtdNotas20 * 20);
+            }
+            //Calculo das notas de 10
+            valorTemp = valor % 10;
+            valor = valor - valorTemp;
+
+            temp = (int)valor / 10;
+
+            if (temp <= est.QtdNotas10)
+            {
+                respEst.QtdNotas10 = temp;
+                est.QtdNotas10 -= temp;
+                respEst.sucesso = true;
+            }
+            else
+            {
+                respEst.sucesso = false;
+            }
+            return respEst;
         }
 
     }

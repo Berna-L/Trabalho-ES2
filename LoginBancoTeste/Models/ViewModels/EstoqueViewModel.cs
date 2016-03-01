@@ -11,6 +11,7 @@ namespace LoginBancoTeste.Models.ViewModels
         public int QtdNotas20 { get; set; }
         public int QtdNotas50 { get; set; }
         public int QtdNotas100 { get; set; }
-        
+        public bool sucesso { get; set; }
+
     }
 }
