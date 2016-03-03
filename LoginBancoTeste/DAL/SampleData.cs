@@ -218,8 +218,23 @@ namespace LoginBancoTeste.DAL
                 }
             };
 
+
+
             clientes.ForEach(c => context.Clientes.Add(c));
             tiposInvestimento.ForEach(t => context.TiposInvestimento.Add(t));
+            context.SaveChanges();
+
+            var investimentos = new List<Investimento> {
+                new Investimento {
+                    cliente = context.Clientes.Find(1),
+                    tipo_invest = context.TiposInvestimento.Find(1),
+                    data = DateTime.Today.AddYears(-1),
+                    valor_ini = 600,
+                    valor_acc = 600
+                }
+            };
+
+            investimentos.ForEach(i => context.Investimentos.Add(i));
             context.SaveChanges();
 
             //var usuarios = new List<ContaDeUsuario> {

@@ -8,77 +8,63 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LoginBancoTeste.Controllers
-{
-    public class TransacoesController : Controller
-    {
+namespace LoginBancoTeste.Controllers {
+    public class TransacoesController : Controller {
         private BancoContext db = new BancoContext();
 
         // HOME: Transacoes
-        public ActionResult Index(int? id)
-        {
+        public ActionResult Index(int? id) {
             Cliente cliente;
 
-            if (User.Identity.IsAuthenticated)
-            {
+            if (User.Identity.IsAuthenticated) {
                 cliente = this.db.Clientes.Where(s => User.Identity.Name == s.Username).SingleOrDefault();
                 return View(cliente);
             }
 
             // neste caso ainda não logamos como cliente
-            if (id == null)
-            {
+            if (id == null) {
                 return View();
             }
 
             // neste caso logamos como cliente
             cliente = this.db.Clientes.Find(id);
-            if (cliente == null)
-            {
+            if (cliente == null) {
                 return HttpNotFound();
             }
             return View(cliente);
         }
 
         [Authorize]
-        public ActionResult Opcoes(int? numero)
-        {
-            if (numero == null)
-            {
+        public ActionResult Opcoes(int? numero) {
+            if (numero == null) {
                 return HttpNotFound();
             }
             Conta conta = this.db.Contas.Find(numero);
-            if (conta == null)
-            {
+            if (conta == null) {
                 return HttpNotFound();
             }
             return View(conta);
         }
 
         [Authorize]
-        public ActionResult Saldo(int? numero)
-        {
-            if (numero == null)
-            {
+        public ActionResult Saldo(int? numero) {
+            if (numero == null) {
                 return View();
             }
             Conta conta = this.db.Contas.Find(numero);
-            if (conta == null)
-            {
+            if (conta == null) {
                 return HttpNotFound();
             }
             return View(conta);
         }
 
         [Authorize]
-        public ActionResult Saque()
-        {
+        public ActionResult Saque() {
             return View();
         }
 
         [Authorize]
-        public ActionResult Investimentos(int? idCliente, int? idConta)
-        {
+        public ActionResult Investimentos(int? idCliente, int? idConta) {
             if (idCliente == null || idConta == null) {
                 return HttpNotFound("deu id nulo mermão");
             }
@@ -89,6 +75,12 @@ namespace LoginBancoTeste.Controllers
             }
             ViewBag.idCliente = idCliente;
             ViewBag.idConta = idConta;
+            Investimento debug = this.db.Investimentos.Find(3);
+            foreach(Investimento inv in this.db.Investimentos.Where(inv => inv.cliente.Id == cliente.Id)){
+                if (inv.data_canc == null) {
+                    inv.valor_acc = TipoInvestimentoAux.CalcularRendimento(inv, inv.data, DateTime.Today);
+                }
+            }
             return View(this.db.Investimentos.Where(i => i.cliente.Id == cliente.Id));
         }
 
@@ -124,23 +116,40 @@ namespace LoginBancoTeste.Controllers
         }
 
         public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest, int? idConta) {
-            Investimento i = new Investimento();
-            i.cliente = this.db.Clientes.Find(invest.numCliente);
-            i.data = invest.data;
-            i.tipo_invest = this.db.TiposInvestimento.Find(invest.tipo);
-            i.valor_ini = invest.valor;
-            ViewBag.idConta = invest.contaADebitar;
-            ViewBag.JurosMes = (Math.Pow(i.tipo_invest.jurosDia,30) - 1) * 100;
-            ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(i, DateTime.Today, DateTime.Today.AddMonths(1));
-            ViewBag.JurosAno = (Math.Pow(i.tipo_invest.jurosDia,365) - 1) * 100;
-            ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(i, DateTime.Today, DateTime.Today.AddYears(1));
-            return View(i);
+            if (ModelState.IsValid) {
+                TipoInvestimento t = this.db.TiposInvestimento.Find(invest.tipo);
+                ViewBag.Tipo = t.nome;
+                ViewBag.JurosMes = (Math.Pow(t.jurosDia, 30) - 1) * 100;
+                ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddMonths(1));
+                ViewBag.JurosAno = (Math.Pow(t.jurosDia, 365) - 1) * 100;
+                ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddYears(1));
+                return View(invest);
+            }
+            return HttpNotFound();
         }
 
-        public ActionResult Deposito(int? numero)
-        {
-            if (numero == null)
-            {
+        [HttpPost]
+        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest) {
+            if (ModelState.IsValid) {
+                Investimento i = new Investimento();
+                i.cliente = this.db.Clientes.Find(invest.numCliente);
+                i.data = invest.data;
+                i.data_canc = null;
+                i.tipo_invest = this.db.TiposInvestimento.Find(invest.tipo);
+                i.valor_ini = invest.valor;
+                ViewBag.idConta = invest.contaADebitar;
+                Conta conta = this.db.Contas.Find(invest.contaADebitar);
+                conta.Saldo -= invest.valor;
+                this.db.Investimentos.Add(i);
+                this.db.SaveChanges();
+                TempData["Sucesso"] = "Investimento de R$ " + i.valor_ini + " realizado com sucesso!";
+                return RedirectToAction("Opcoes", new { numero = invest.contaADebitar });
+            }
+            return View(invest);
+        }
+
+        public ActionResult Deposito(int? numero) {
+            if (numero == null) {
                 return View();
             }
             DepositoViewModel deposito = new DepositoViewModel();
@@ -150,10 +159,8 @@ namespace LoginBancoTeste.Controllers
         }
 
         [HttpPost]
-        public ActionResult Deposito(DepositoViewModel deposito)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult Deposito(DepositoViewModel deposito) {
+            if (ModelState.IsValid) {
                 Conta conta = this.db.Contas.Find(deposito.NumeroConta);
                 conta.Saldo += deposito.Valor;
                 this.db.SaveChanges();
@@ -165,10 +172,8 @@ namespace LoginBancoTeste.Controllers
         }
 
         [Authorize]
-        public ActionResult Transferencia(int? numero)
-        {
-            if (numero == null)
-            {
+        public ActionResult Transferencia(int? numero) {
+            if (numero == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TransferenciaViewModel dados = new TransferenciaViewModel();
@@ -176,22 +181,18 @@ namespace LoginBancoTeste.Controllers
 
             return View(dados);
         }
-        
+
         [HttpPost]
-        public ActionResult Transferencia(TransferenciaViewModel dados)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult Transferencia(TransferenciaViewModel dados) {
+            if (ModelState.IsValid) {
                 Conta conta = this.db.Contas.Find(dados.NumeroConta);
-                if (conta.Saldo < dados.Valor)
-                {
+                if (conta.Saldo < dados.Valor) {
                     ViewBag.Error = "Saldo insuficiente para transferencia de R$ " + dados.Valor + " reais!";
                     return View(dados);
                 }
 
                 Conta contaDestino = this.db.Contas.Find(dados.NumeroContaDestino);
-                if (contaDestino == null)
-                {
+                if (contaDestino == null) {
                     ViewBag.Error = "Conta destino inexistente!";
                     return View(dados);
                 }
@@ -203,10 +204,8 @@ namespace LoginBancoTeste.Controllers
         }
 
         [HttpPost]
-        public ActionResult TransferenciaConfirmacao(TransferenciaViewModel dados)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult TransferenciaConfirmacao(TransferenciaViewModel dados) {
+            if (ModelState.IsValid) {
                 // descrementa da conta 
                 Conta conta = this.db.Contas.Find(dados.NumeroConta);
                 conta.Saldo -= dados.Valor;

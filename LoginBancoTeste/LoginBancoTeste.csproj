@@ -137,6 +137,10 @@
     <Compile Include="Migrations\201602241905505_TipoInvestimento.Designer.cs">
       <DependentUpon>201602241905505_TipoInvestimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603031441476_DataCancelamentoNulavel.cs" />
+    <Compile Include="Migrations\201603031441476_DataCancelamentoNulavel.Designer.cs">
+      <DependentUpon>201603031441476_DataCancelamentoNulavel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Investimento.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -315,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602241905505_TipoInvestimento.resx">
       <DependentUpon>201602241905505_TipoInvestimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603031441476_DataCancelamentoNulavel.resx">
+      <DependentUpon>201603031441476_DataCancelamentoNulavel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
