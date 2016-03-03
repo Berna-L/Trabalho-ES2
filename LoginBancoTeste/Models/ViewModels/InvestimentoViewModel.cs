@@ -8,15 +8,16 @@ namespace LoginBancoTeste.Models.ViewModels {
     public class InvestimentoViewModel {
 
         [Required]
-        public Cliente cliente { get; set; }
+        public int? numCliente { get; set; }
         [Required]
-        public Conta contaADebitar { get; set; }
+        public int? contaADebitar { get; set; }
         [Required]
         public DateTime data { get; set; }
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage ="Valor vazio.")]
         public int valor { get; set; }
         [Required]
-        public TipoInvestimento tipo { get; set; }
+        public int? tipo { get; set; }
 
     }
 }

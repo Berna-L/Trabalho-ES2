@@ -11,8 +11,10 @@
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.cliente)
+    @Html.HiddenFor(model => model.numCliente)
+    @Html.HiddenFor(model => model.contaADebitar)
     @Html.HiddenFor(model => model.data)
+
 
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -21,12 +23,11 @@
         <div class="panel-body">
 
             <div class="form-horizontal">
-                @Html.DisplayFor(model => model.cliente.Nome)
                 <div class="form-group">
                     <label class="control-label col-md-2">Tipo:</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                        @Html.EnumDropDownListFor(model => model.tipo, "", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.tipo, (SelectList)ViewBag.tipos, new { @class = "form-control" })
                     </div>
                     @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
                 </div>
@@ -54,7 +55,7 @@
     </div>
 }
 <p>
-    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.cliente.Id, idConta = ViewBag.idConta })" class="btn btn-default">
+    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.numCliente, idConta = Model.contaADebitar })" class="btn btn-default">
         <span class="glyphicon glyphicon-chevron-left"></span>
         Voltar
     </a>
