@@ -11,6 +11,16 @@ namespace LoginBancoTeste.DAL
     {
         protected override void Seed(BancoContext context)
         {
+            var banco = new Banco
+            {
+                nome = "Banco Exemplo"
+            };
+
+            var agencia = new Agencia
+            {
+                banco = banco
+            };
+
             var clientes = new List<Cliente>
             {
                 new Cliente 
@@ -29,12 +39,14 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 5340000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         },
                         new Conta 
                         {
                             Saldo = 1280000,
-                            TipoDeConta = TipoDeConta.POUPANCA
+                            TipoDeConta = TipoDeConta.POUPANCA,
+                            agencia = agencia
                         }
                     },
                     Username = "111",
@@ -56,7 +68,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 8000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },
                     Username = "222",
@@ -78,7 +91,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 16500,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },
                     Username = "333",
@@ -100,7 +114,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 65000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },   
                     Username = "444",
@@ -122,18 +137,21 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 759000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
 
                         },
                         new Conta 
                         {
                             Saldo = 92000,
-                            TipoDeConta = TipoDeConta.POUPANCA
+                            TipoDeConta = TipoDeConta.POUPANCA,
+                            agencia = agencia
                         },
                         new Conta 
                         {
                             Saldo = 12000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },    
                     Username = "555",
@@ -155,7 +173,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 900,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },                    
                     Username = "666",
@@ -177,7 +196,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 25000,
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },           
                     Username = "777",
@@ -199,7 +219,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 48900, 
-                            TipoDeConta = TipoDeConta.CORRENTE
+                            TipoDeConta = TipoDeConta.CORRENTE,
+                            agencia = agencia
                         }
                     },     
                     Username = "888",

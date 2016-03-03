@@ -14,6 +14,7 @@ namespace LoginBancoTeste.DAL
 
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Cheque> Cheques { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

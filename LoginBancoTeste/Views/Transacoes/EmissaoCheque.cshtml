@@ -1,4 +1,5 @@
 ﻿@model LoginBancoTeste.Models.ViewModels.EmChequeViewModel
+
 @{
     ViewBag.Title = "Cheque";
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
@@ -12,7 +13,7 @@
     <title>Emissao de Cheque</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("ImpCheques", "Transacoes", new AjaxOptions { UpdateTargetId = "divQtdCheques" }))
+    @using (Ajax.BeginForm("ImpCheques", "Transacoes", new {numConta = Model.numConta}, new AjaxOptions { UpdateTargetId = "divQtdCheques" }))
     {
         <fieldset>
             <h2 align="center">Emissão de Cheques</h2>

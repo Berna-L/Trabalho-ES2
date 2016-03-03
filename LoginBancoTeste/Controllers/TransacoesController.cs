@@ -89,31 +89,76 @@ namespace LoginBancoTeste.Controllers
             return View();
         }
 
-        public ActionResult EmissaoCheque()
-        {
+        public ActionResult EmissaoCheque(int numero)
+        {            
             EmChequeViewModel ecvm = new EmChequeViewModel();
+            ecvm.numConta = numero;
             return View(ecvm);
         }
 
         [HttpPost]
-        public ActionResult ImpCheques(EmChequeViewModel ecvm)
+        public ActionResult ImpCheques(EmChequeViewModel ecvm, int numConta)
         {
             if (ecvm.qtdCheque < 4 || ecvm.qtdCheque > 20)
             {
-                return RedirectToAction("EmissaoCheque");
+                return RedirectToAction("EmissaoCheque", new {numero = ecvm.qtdCheque});
             }
             else {
+                Conta conta = this.db.Contas.Find(numConta);
+                if (conta == null)
+                {
+                    return HttpNotFound();
+                }
+                long numCheque;
+
                 for (int i = 0; i < ecvm.qtdCheque; i++)
                 {
                     Cheque cheque = new Cheque();
-                    //Criar detalhes dos cheques aqui
+                    String detalhes;
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Cheques.Add(cheque);
+                        db.SaveChanges();
+                    }
 
                     PdfDocument pdf = new PdfDocument();
                     PdfPage pdfPage = pdf.AddPage();
                     XGraphics graph = XGraphics.FromPdfPage(pdfPage);
-                    XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
-                    graph.DrawString("Exemplo de cheque", font, XBrushes.Black, new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
-                    String saida = ecvm.dirSaida + "cheque" + (i + 1) + ".pdf";
+                    XFont font = new XFont("Verdana", 14, XFontStyle.Bold);
+
+                    numCheque = cheque.numCheque;
+                    detalhes = "Agência "+ conta.agencia.numAgencia + "| Banco " + conta.agencia.banco.numBanco + "| Conta " + conta.Numero + "| Número do Cheque " + numCheque;
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "Pague por este cheque a quantia de";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 50, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 55, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "e centavos acima";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 150, 105, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 110, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "ou à sua ordem";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 150, 160, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 165, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = ",       de                        de 20";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 250, 215, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 350, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Gray, new XRect(pdfPage.Width.Point - 350, 270, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    String saida = ecvm.dirSaida + "cheque" + numCheque + ".pdf";
 
                     try
                     {

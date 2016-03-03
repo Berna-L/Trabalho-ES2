@@ -9,13 +9,7 @@ namespace LoginBancoTeste.Models
     public class Cheque
     {
         [Key]
-        public int Id { get; set; }
-
-        [Required]
-        public string Nome { get; set; }
-
-        [Required]
-        public virtual Conta conta { get; set; }
+        public long numCheque { get; set; }
 
         //[Required]
         //public virtual Agencia agencia { get; set; }
