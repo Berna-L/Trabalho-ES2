@@ -44,6 +44,12 @@ namespace LoginBancoTeste
             );
 
             routes.MapRoute(
+                "Extrato",
+                "Transacoes/Extrato/{numero}",
+                defaults: new { controller = "Transacoes", action = "Extrato" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Transacoes", action = "Index", id = UrlParameter.Optional }
