@@ -18,20 +18,20 @@ namespace LoginBancoTeste.Models {
 
     public class TipoInvestimentoAux {
         
-        public static double CalcularRendimento(Investimento invest, DateTime data_ini, DateTime data_final) {
-            if (data_ini > data_final) {
+        public static long CalcularRendimento(Investimento invest, DateTime data_final) {
+            if (invest.data > data_final) {
                 return -1;
             }
-            TimeSpan periodo = data_final - data_ini;
-            return invest.valor_ini * Math.Pow(invest.tipo_invest.jurosDia, Math.Floor(periodo.TotalDays));
+            TimeSpan periodo = data_final - invest.data;
+            return (long)(invest.valor_ini * Math.Pow(invest.tipo_invest.jurosDia, Math.Floor(periodo.TotalDays)) * 100);
         }
 
-        public static double CalcularRendimento(double valor, TipoInvestimento tipo, DateTime data_ini, DateTime data_final) {
+        public static long CalcularRendimento(long valor, TipoInvestimento tipo, DateTime data_ini, DateTime data_final) {
             if (data_ini > data_final) {
                 return -1;
             }
             TimeSpan periodo = data_final - data_ini;
-            return valor * Math.Pow(tipo.jurosDia, Math.Floor(periodo.TotalDays));
+            return (long)(valor * Math.Pow(tipo.jurosDia, Math.Floor(periodo.TotalDays)) * 100);
         }
 
 

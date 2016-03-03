@@ -34,13 +34,13 @@
             @foreach (var item in Model) {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.tipo_invest)
+                        @Html.DisplayFor(modelItem => item.tipo_invest.nome)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.valor_ini)
+                        R$ @Html.DisplayFor(modelItem => item.valor_ini)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.valor_acc)
+                        R$ @Html.DisplayFor(modelItem => item.valor_acc)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.data)

@@ -18,11 +18,11 @@ namespace LoginBancoTeste.Models {
 
         [Required]
         [Display(Name = "Valor inicial")]
-        public double valor_ini { get; set; }
+        public long valor_ini { get; set; }
 
         [Required]
         [Display(Name = "Valor acumulado até a data")]
-        public double valor_acc { get; set; }
+        public long valor_acc { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

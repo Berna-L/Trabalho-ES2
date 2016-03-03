@@ -14,8 +14,8 @@ namespace LoginBancoTeste.Models.ViewModels {
         [Required]
         public DateTime data { get; set; }
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage ="Valor vazio.")]
-        public int valor { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage ="Valor vazio.")]
+        public long valor { get; set; }
         [Required]
         public int? tipo { get; set; }
 
