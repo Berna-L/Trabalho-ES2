@@ -120,9 +120,9 @@ namespace LoginBancoTeste.Controllers {
                 TipoInvestimento t = this.db.TiposInvestimento.Find(invest.tipo);
                 ViewBag.Tipo = t.nome;
                 ViewBag.JurosMes = ((int)((Math.Pow(t.jurosDia, 30) - 1) * 10000)) / 100.0f;
-                ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddMonths(1));
+                ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddMonths(1)) / 100.0f;
                 ViewBag.JurosAno = ((int)((Math.Pow(t.jurosDia, 365) - 1) * 10000)) / 100.0f;
-                ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddYears(1));
+                ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddYears(1)) / 100.0f;
                 return View(invest);
             }
             return HttpNotFound();
