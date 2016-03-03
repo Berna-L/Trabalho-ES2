@@ -20,6 +20,30 @@ namespace LoginBancoTeste
             //);
 
             routes.MapRoute(
+                "Opcoes",
+                "Transacoes/Opcoes/{numero}",
+                defaults: new { controller = "Transacoes", action = "Opcoes" }
+            );
+
+            routes.MapRoute(
+                "Deposito",
+                "Transacoes/Deposito/{numero}",
+                defaults: new { controller = "Transacoes", action = "Deposito" }
+            );
+
+            routes.MapRoute(
+                "Saldo",
+                "Transacoes/Saldo/{numero}",
+                defaults: new { controller = "Transacoes", action = "Saldo" }
+            );
+
+            routes.MapRoute(
+                "Transferencia",
+                "Transacoes/Transferencia/{numero}",
+                defaults: new { controller = "Transacoes", action = "Transferencia" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Transacoes", action = "Index", id = UrlParameter.Optional }

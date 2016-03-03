@@ -41,6 +41,7 @@ namespace LoginBancoTeste.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult Opcoes(int? numero)
         {
             if (numero == null)
