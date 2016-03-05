@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,15 +122,18 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\PagamentoController.cs" />
     <Compile Include="Controllers\TransacoesController.cs" />
     <Compile Include="DAL\BancoContext.cs" />
     <Compile Include="DAL\SampleData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pagamento.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\ViewModels\BoletoModelView.cs" />
     <Compile Include="Models\ViewModels\ContaViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -190,6 +194,11 @@
     <Content Include="Views\Transacoes\Saque.cshtml" />
     <Content Include="Views\Transacoes\Opcoes.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Pagamento\Index.cshtml" />
+    <Content Include="Views\Pagamento\PgmtoVerifica.cshtml" />
+    <Content Include="Views\Pagamento\PgmtoConfirma.cshtml" />
+    <Content Include="Views\Pagamento\PgmtoVencido.cshtml" />
+    <Content Include="Views\Pagamento\PgmtoVlrVenc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
