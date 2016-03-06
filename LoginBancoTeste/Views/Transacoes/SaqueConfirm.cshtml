@@ -1,17 +1,35 @@
-﻿@model LoginBancoTeste.Models.Conta
+﻿@model LoginBancoTeste.Models.ViewModels.EntradaSaqueViewModel
 @{
-    ViewBag.Title = "Saque";
+    ViewBag.Title = "SaqueConfirm";
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-<h2>Saque</h2>
-
-
+@using (Html.BeginForm("SaqueConfirm"))
+{
+    @Html.HiddenFor(model => model.NumeroConta)
+    @Html.HiddenFor(model => model.Valor);
     
-        @if (ViewBag.Sucesso != null)
-        { <p>@ViewBag.Sucesso</p> }
-        
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">Confirmação do Saque</h2>
+        </div>
+        <div class="panel-body">
             
-        @Html.ActionLink("Retornar", "Opcoes", new { numero = Model.Numero }, new { @class = "btn btn-lg btn-primary btn-block" })
+            <p>Deseja realizar o saque de R$ @Model.Valor reais?</p>
 
-   
+            <button type="submit" class="btn btn-success" value="Salvar">
+                <span class="glyphicon glyphicon-ok"></span>
+                Ok
+            </button>
+
+        </div>
+    </div>
+}
+
+<p>
+    <a href="@Url.Action("Saque", "Transacoes", new { numero = Model.NumeroConta })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+

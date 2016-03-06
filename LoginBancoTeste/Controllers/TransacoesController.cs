@@ -77,48 +77,89 @@ namespace LoginBancoTeste.Controllers
             {
                 return View();
             }
+
             Conta conta = this.db.Contas.Find(numero);
+            
             if (conta == null)
             {
                 return HttpNotFound();
             }
-                        
+
             return View(conta);
         }
+
+        //[Authorize]
+        //public ActionResult SaqueCustomizado(double valor)
+        //{
+        //    EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
+        //    return View(entrada);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Index(EntradaSaqueViewModel entrada)
+        //{
+        //    if (!(entrada.Valor > 0) || (entrada.Valor % 10 != 0))
+        //    {
+        //        ViewBag.Erro = "O caixa trabalha com notas de 10, 20, 50 e 100!";
+
+        //        return View(entrada);
+        //    }
+        //    return RedirectToAction("SaqueConfirm", entrada);
+        //}
+
         [Authorize]
-        public ActionResult SaqueConfirm(int? numero, double valor)
+        public ActionResult SaqueConfirm(int? numero, double valor) 
         {
-            String resp = "";            
-            
-            if (numero == null)
+            EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
+            entrada.NumeroConta = numero;
+            entrada.Valor = valor;
+
+            return View(entrada);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult SaqueConfirm(EntradaSaqueViewModel entrada)
+        {
+            String resposta = string.Empty;
+
+            if (entrada.NumeroConta == null)
             {
-                return View();
+                return HttpNotFound();
             }
-            Conta conta = this.db.Contas.Find(numero);
+
+            Conta conta = this.db.Contas.Find(entrada.NumeroConta);
             if (conta == null)
             {
                 return HttpNotFound();
             }
-            if (conta.Saldo<valor)
+
+            if (conta.Saldo < entrada.Valor)
             {
-                resp = "Saldo insuficiente.";
+                resposta = "Saldo insuficiente.";
             }
             else
             {
-                EstoqueViewModel qtdNotas = calcularNotas(valor);
-                if (!qtdNotas.sucesso)
+                EstoqueViewModel qtdNotas = calcularNotas(entrada.Valor);
+                if (!qtdNotas.Sucesso)
                 {
-                    resp = "Noatas insuficientes no caixa, escolha outro valor.";
+                    // neste caso não existe uma quantidade de notas suficiente para sacar
+                    resposta = "Notas insuficientes no caixa, escolha outro valor.";
                 }
                 else
                 {
-                    resp = "Saque efetuado com sucesso.";
-                    conta.Saldo -= valor;
+                    // desconta o saldo pelo saque efetuado
+                    conta.Saldo -= entrada.Valor;
+                    // salva as alterações no banco de dados
                     db.SaveChanges();
+
+                    TempData["Sucesso"] = "Saque de R$ " + entrada.Valor + " efetuado com sucesso.";
+
+                    return RedirectToAction("Opcoes", "Transacoes", new { numero = entrada.NumeroConta });
                 }
             }
-            
-            ViewBag.Sucesso = resp;
+
+            ViewBag.Sucesso = resposta;
             return View(conta);
         }
 
@@ -169,7 +210,7 @@ namespace LoginBancoTeste.Controllers
 
             return View(dados);
         }
-        
+
         [HttpPost]
         public ActionResult Transferencia(TransferenciaViewModel dados)
         {
@@ -226,7 +267,6 @@ namespace LoginBancoTeste.Controllers
 
         public EstoqueViewModel calcularNotas(double valor)
         {
-
             double valorTemp = (valor % 100);
             Estoque est = this.db.Estoque.First();
             valor = valor - valorTemp;
@@ -241,7 +281,7 @@ namespace LoginBancoTeste.Controllers
             else
             {
                 respEst.QtdNotas100 = est.QtdNotas100;
-                est.QtdNotas100 =0;
+                est.QtdNotas100 = 0;
                 valorTemp += valor - (respEst.QtdNotas100 * 100);
             }
             //Calculo das notas de 50
@@ -288,11 +328,11 @@ namespace LoginBancoTeste.Controllers
             {
                 respEst.QtdNotas10 = temp;
                 est.QtdNotas10 -= temp;
-                respEst.sucesso = true;
+                respEst.Sucesso = true;
             }
             else
             {
-                respEst.sucesso = false;
+                respEst.Sucesso = false;
             }
             return respEst;
         }

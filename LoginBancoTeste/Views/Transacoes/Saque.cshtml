@@ -4,19 +4,18 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-<h2>Saque</h2>
-
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h2 class="panel-title">Escolha o valor:</h2>
+        <h2 class="panel-title">Saque</h2>
     </div>
     <div class="panel-body">
-
+        <p>Escolha o valor: </p>
         <div class="row">
             <div class="col-lg-6">
                 @Html.ActionLink("R$10,00", "SaqueConfirm", new { numero = Model.Numero, valor = 10 }, new { @class = "btn btn-lg btn-primary btn-block" })
                 @Html.ActionLink("R$40,00", "SaqueConfirm", new { numero = Model.Numero, valor = 40 }, new { @class = "btn btn-lg btn-primary btn-block" })
                 @Html.ActionLink("R$50,00", "SaqueConfirm", new { numero = Model.Numero, valor = 50 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("Outro Valor", "SaqueCustomizado", new { numero = Model.Numero, valor = 50 }, new { @class = "btn btn-lg btn-primary btn-block" })
             </div>
             <div class="col-lg-6">
                 @Html.ActionLink("R$20,00", "SaqueConfirm", new { numero = Model.Numero, valor = 20 }, new { @class = "btn btn-lg btn-primary btn-block" })

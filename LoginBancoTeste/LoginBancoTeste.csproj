@@ -123,6 +123,8 @@
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EstoquesController.cs" />
+    <Compile Include="Models\ViewModels\EntradaSaqueViewModel.cs" />
+    <Compile Include="Models\ViewModels\EstoqueViewModel.cs" />
     <Compile Include="Controllers\TransacoesController.cs" />
     <Compile Include="DAL\BancoContext.cs" />
     <Compile Include="DAL\SampleData.cs" />
@@ -203,6 +205,7 @@
     <Content Include="Views\Estoques\Details.cshtml" />
     <Content Include="Views\Estoques\Edit.cshtml" />
     <Content Include="Views\Estoques\Index.cshtml" />
+    <Content Include="Views\Transacoes\SaqueCustomizado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
