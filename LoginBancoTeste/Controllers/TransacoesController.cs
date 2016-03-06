@@ -154,12 +154,8 @@ namespace LoginBancoTeste.Controllers {
             return View(invest);
         }
 
-        [Authorize]
-        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest) {
+        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest, int? idConta) {
             if (ModelState.IsValid) {
-                if (invest.confirmado) {
-                    return RedirectToAction("InvestimentoCriarFinal", invest);
-                }
                 invest.confirmado = true;
                 TipoInvestimento t = this.db.TiposInvestimento.Find(invest.tipo);
                 ViewBag.Tipo = t.nome;
@@ -173,11 +169,11 @@ namespace LoginBancoTeste.Controllers {
         }
 
         [HttpPost]
-        public ActionResult InvestimentoCriarFinal(InvestimentoViewModel invest) {
+        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest) {
             if (ModelState.IsValid) {
                 Investimento i = new Investimento();
                 i.cliente = this.db.Clientes.Find(invest.numCliente);
-                i.data = invest.data;
+                i.data = DateTime.Today;
                 i.data_canc = null;
                 i.tipo_invest = this.db.TiposInvestimento.Find(invest.tipo);
                 i.valor_ini = invest.valor;

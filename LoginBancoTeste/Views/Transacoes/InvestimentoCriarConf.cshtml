@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
+@using (Html.BeginForm("InvestimentoCriarConf", "Transacoes", FormMethod.Post)) {
+    @Html.HiddenFor(model => model.contaADebitar)
+    @Html.HiddenFor(model => model.data)
+    @Html.HiddenFor(model => model.numCliente)
+    @Html.HiddenFor(model => model.tipo)
+    @Html.HiddenFor(model => model.valor)
+    @Html.HiddenFor(model => model.confirmado)
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Confirmação de investimento </h3>
@@ -60,7 +67,7 @@
 
         </div>
     </div>
-
+}
 <p>
     <a href="@Url.Action("InvestimentoCriar", "Transacoes", new { idCliente = Model.numCliente, idConta = Model.contaADebitar })" class="btn btn-default">
         <span class="glyphicon glyphicon-chevron-left"></span>
