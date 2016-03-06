@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.data_canc)
                     </td>
                     <td>
-                        @Html.ActionLink("Detalhes", "InvestimentoDetalhe", new { id = item.Id })
+                        @Html.ActionLink("Detalhes", "InvestimentoDetalhe", new { id = item.Id, idConta = ViewBag.idConta })
                     </td>
                 </tr>
             }

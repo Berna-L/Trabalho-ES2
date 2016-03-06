@@ -9,14 +9,19 @@
     <div class="panel-heading">
         <h3 class="panel-title">Detalhes do investimento</h3>
     </div>
-    @Html.DisplayFor(model => model.cliente)
     <div class="panel-body">
-        <dl class="dl-horizontal">
+        <dl class="dl-horizontal text-right col-sm-10">
             <dt>
                 Tipo:
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.tipo_invest.nome)
+            </dd>
+            <dt>
+                Juros mês:
+            </dt>
+            <dd>
+                @ViewBag.JurosMes%
             </dd>
             <dt>
                 Data de criação:
@@ -31,12 +36,6 @@
                 @Html.DisplayFor(model => model.valor_ini)
             </dd>
             <dt>
-                Juros mês:
-            </dt>
-            <dd>
-                @ViewBag.JurosMes%
-            </dd>
-            <dt>
                 Valor acumulado:
             </dt>
             <dd>
@@ -44,24 +43,25 @@
             </dd>
         </dl>
 
-        <div class="col-sm-offset-2 col-md-2">
-            <button type="submit" class="btn btn-info" value="Ok">
-                <span class="glyphicon glyphicon-warning-sign"></span>
-                Cancelar
-            </button>
+        @if (Model.data_canc == null) {
+            <div class="text-center">
+                <a href="@Url.Action("InvestimentoCancelar", "Transacoes", new { id = Model.Id, idConta = ViewBag.idConta })" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-warning-sign"></span>
+                    Cancelar investimento
+                </a>
+            </div>
+        }
         </div>
-
     </div>
-</div>
 
-<p>
-    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.cliente.Id, idConta = ViewBag.idConta })" class="btn btn-default">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        Voltar
-    </a>
-</p>
+    <p>
+        <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.cliente.Id, idConta = ViewBag.idConta })" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            Voltar
+        </a>
+    </p>
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

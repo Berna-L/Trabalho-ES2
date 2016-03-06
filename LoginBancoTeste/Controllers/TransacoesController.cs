@@ -76,33 +76,49 @@ namespace LoginBancoTeste.Controllers {
             ViewBag.idCliente = idCliente;
             ViewBag.idConta = idConta;
             Investimento debug = this.db.Investimentos.Find(1);
-            foreach (Investimento inv in this.db.Investimentos.Where(inv => inv.cliente.Id == cliente.Id).ToList()) {
+            IList<Investimento> listaInvest = this.db.Investimentos.Where(inv => inv.cliente.Id == cliente.Id).ToList();
+            foreach (Investimento inv in listaInvest) {
                 if (inv.data_canc == null) {
                     inv.valor_acc = TipoInvestimentoAux.CalcularRendimento(inv, DateTime.Today);
                 }
             }
             this.db.SaveChanges();
-            return View(this.db.Investimentos.Where(i => i.cliente.Id == cliente.Id));
+            return View(listaInvest);
         }
 
         [HttpPost]
-        public ActionResult Investimentos(Investimento invest) {
-            if (invest == null) {
+        public ActionResult Investimentos(Investimento invest, int? idConta) {
+            if (invest == null || idConta == null) {
                 HttpNotFound();
             }
-            return RedirectToAction("InvestimentoDetalhe", invest);
+            return RedirectToAction("InvestimentoDetalhe", new { id = invest.Id, idConta = idConta });
         }
 
         [Authorize]
-        public ActionResult InvestimentoDetalhe(int? id) {
-            //if (id == null || idConta == null) {
-            //    return HttpNotFound();
-            //}
+        public ActionResult InvestimentoDetalhe(int? id, int? idConta) {
+            if (id == null || idConta == null) {
+                return HttpNotFound();
+            }
             Investimento invest = this.db.Investimentos.Find(id);
-            //ViewBag.idConta = idConta;
-            //ViewBag.JurosMes = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 30) - 1) * 10000)) / 100.0f;
-            //ViewBag.JurosAno = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 365) - 1) * 10000)) / 100.0f;
+            invest.cliente = this.db.Contas.Find(idConta).Cliente; //Gambiarra porque já tô aqui com asp.net
+            ViewBag.idConta = idConta;
+            ViewBag.JurosMes = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 30) - 1) * 10000)) / 100.0f;
+            ViewBag.JurosAno = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 365) - 1) * 10000)) / 100.0f;
             return View(invest);
+        }
+
+        public ActionResult InvestimentoCancelar(int? id, int? idConta) {
+            if (id == null || idConta == null){
+                return HttpNotFound();
+            }
+            Conta conta = this.db.Contas.Find(idConta);
+            Investimento invest = this.db.Investimentos.Find(id);
+            invest.cliente = conta.Cliente;
+            conta.Saldo += invest.valor_acc;
+            invest.data_canc = DateTime.Today;
+            this.db.SaveChanges();
+            TempData["Sucesso"] = "Investimento de R$ " + invest.valor_acc + " cancelado e valor adicionado à conta!";
+            return RedirectToAction("Opcoes", new { numero = idConta });
         }
 
 
@@ -112,6 +128,7 @@ namespace LoginBancoTeste.Controllers {
                 return HttpNotFound();
             }
             InvestimentoViewModel invest = new InvestimentoViewModel();
+            invest.confirmado = false;
             invest.numCliente = idCliente;
             invest.data = DateTime.Today;
             invest.contaADebitar = idConta;
@@ -122,14 +139,28 @@ namespace LoginBancoTeste.Controllers {
         [HttpPost]
         public ActionResult InvestimentoCriar(InvestimentoViewModel invest) {
             if (ModelState.IsValid && invest.valor > 0) {
+                Conta conta = this.db.Contas.Find(invest.contaADebitar);
+                if (invest.valor > conta.Saldo) {
+                    ViewBag.Error = "Valor excede o saldo da conta.";
+                    ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(1));
+                    return View(invest);
+                }
                 return RedirectToAction("InvestimentoCriarConf", invest);
+            }
+ else {
+                ViewBag.Error = "Erro desconhecido.";
             }
             ViewBag.tipos = new SelectList(this.db.TiposInvestimento.ToList(), "Id", "nome", this.db.TiposInvestimento.Find(1));
             return View(invest);
         }
 
-        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest, int? idConta) {
+        [Authorize]
+        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest) {
             if (ModelState.IsValid) {
+                if (invest.confirmado) {
+                    return RedirectToAction("InvestimentoCriarFinal", invest);
+                }
+                invest.confirmado = true;
                 TipoInvestimento t = this.db.TiposInvestimento.Find(invest.tipo);
                 ViewBag.Tipo = t.nome;
                 ViewBag.JurosMes = ((int)((Math.Pow(t.jurosDia, 30) - 1) * 10000)) / 100.0f;
@@ -142,7 +173,7 @@ namespace LoginBancoTeste.Controllers {
         }
 
         [HttpPost]
-        public ActionResult InvestimentoCriarConf(InvestimentoViewModel invest) {
+        public ActionResult InvestimentoCriarFinal(InvestimentoViewModel invest) {
             if (ModelState.IsValid) {
                 Investimento i = new Investimento();
                 i.cliente = this.db.Clientes.Find(invest.numCliente);

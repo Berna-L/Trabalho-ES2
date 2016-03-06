@@ -19,6 +19,8 @@ namespace LoginBancoTeste.Models.ViewModels {
         public long valor { get; set; }
         [Required]
         public int? tipo { get; set; }
+        [Required]
+        public bool confirmado { get; set; }
 
     }
 }
