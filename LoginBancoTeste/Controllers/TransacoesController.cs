@@ -76,11 +76,12 @@ namespace LoginBancoTeste.Controllers {
             ViewBag.idCliente = idCliente;
             ViewBag.idConta = idConta;
             Investimento debug = this.db.Investimentos.Find(1);
-            foreach(Investimento inv in this.db.Investimentos.Where(inv => inv.cliente.Id == cliente.Id).ToList()){
+            foreach (Investimento inv in this.db.Investimentos.Where(inv => inv.cliente.Id == cliente.Id).ToList()) {
                 if (inv.data_canc == null) {
                     inv.valor_acc = TipoInvestimentoAux.CalcularRendimento(inv, DateTime.Today);
                 }
             }
+            this.db.SaveChanges();
             return View(this.db.Investimentos.Where(i => i.cliente.Id == cliente.Id));
         }
 
@@ -89,6 +90,18 @@ namespace LoginBancoTeste.Controllers {
             if (invest == null) {
                 HttpNotFound();
             }
+            return RedirectToAction("InvestimentoDetalhe", invest);
+        }
+
+        [Authorize]
+        public ActionResult InvestimentoDetalhe(int? id) {
+            //if (id == null || idConta == null) {
+            //    return HttpNotFound();
+            //}
+            Investimento invest = this.db.Investimentos.Find(id);
+            //ViewBag.idConta = idConta;
+            //ViewBag.JurosMes = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 30) - 1) * 10000)) / 100.0f;
+            //ViewBag.JurosAno = ((int)((Math.Pow(invest.tipo_invest.jurosDia, 365) - 1) * 10000)) / 100.0f;
             return View(invest);
         }
 
@@ -120,9 +133,9 @@ namespace LoginBancoTeste.Controllers {
                 TipoInvestimento t = this.db.TiposInvestimento.Find(invest.tipo);
                 ViewBag.Tipo = t.nome;
                 ViewBag.JurosMes = ((int)((Math.Pow(t.jurosDia, 30) - 1) * 10000)) / 100.0f;
-                ViewBag.SimulacaoMes = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddMonths(1)) / 100.0f;
+                ViewBag.SimulacaoMes = Auxiliares.Util.ConversorReal(TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddMonths(1)));
                 ViewBag.JurosAno = ((int)((Math.Pow(t.jurosDia, 365) - 1) * 10000)) / 100.0f;
-                ViewBag.SimulacaoAno = TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddYears(1)) / 100.0f;
+                ViewBag.SimulacaoAno = Auxiliares.Util.ConversorReal(TipoInvestimentoAux.CalcularRendimento(invest.valor, t, DateTime.Today, DateTime.Today.AddYears(1)));
                 return View(invest);
             }
             return HttpNotFound();

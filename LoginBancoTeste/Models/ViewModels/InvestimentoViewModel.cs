@@ -15,6 +15,7 @@ namespace LoginBancoTeste.Models.ViewModels {
         public DateTime data { get; set; }
         [Required]
         [Range(1, long.MaxValue, ErrorMessage ="Valor vazio.")]
+        [DisplayFormat(DataFormatString = "{0:c2}")]
         public long valor { get; set; }
         [Required]
         public int? tipo { get; set; }

@@ -18,10 +18,12 @@ namespace LoginBancoTeste.Models {
 
         [Required]
         [Display(Name = "Valor inicial")]
+        [DisplayFormat(DataFormatString = "{0:c2}")]
         public long valor_ini { get; set; }
 
         [Required]
         [Display(Name = "Valor acumulado até a data")]
+        [DisplayFormat(DataFormatString = "{0:c2}")]
         public long valor_acc { get; set; }
 
         [Required]

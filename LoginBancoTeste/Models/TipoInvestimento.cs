@@ -23,7 +23,7 @@ namespace LoginBancoTeste.Models {
                 return -1;
             }
             TimeSpan periodo = data_final - invest.data;
-            return (long)(invest.valor_ini * Math.Pow(invest.tipo_invest.jurosDia, Math.Floor(periodo.TotalDays)) * 100);
+            return (long)(invest.valor_ini * Math.Pow(invest.tipo_invest.jurosDia, Math.Floor(periodo.TotalDays)));
         }
 
         public static long CalcularRendimento(long valor, TipoInvestimento tipo, DateTime data_ini, DateTime data_final) {
@@ -31,7 +31,7 @@ namespace LoginBancoTeste.Models {
                 return -1;
             }
             TimeSpan periodo = data_final - data_ini;
-            return (long)(valor * Math.Pow(tipo.jurosDia, Math.Floor(periodo.TotalDays)) * 100);
+            return (long)(valor * Math.Pow(tipo.jurosDia, Math.Floor(periodo.TotalDays)));
         }
 
 

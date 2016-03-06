@@ -1,0 +1,67 @@
+﻿@model LoginBancoTeste.Models.Investimento
+
+@{
+    ViewBag.Title = "InvestimentoDetalhe";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Detalhes do investimento</h3>
+    </div>
+    @Html.DisplayFor(model => model.cliente)
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>
+                Tipo:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.tipo_invest.nome)
+            </dd>
+            <dt>
+                Data de criação:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.data)
+            </dd>
+            <dt>
+                Valor investido:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.valor_ini)
+            </dd>
+            <dt>
+                Juros mês:
+            </dt>
+            <dd>
+                @ViewBag.JurosMes%
+            </dd>
+            <dt>
+                Valor acumulado:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.valor_acc)
+            </dd>
+        </dl>
+
+        <div class="col-sm-offset-2 col-md-2">
+            <button type="submit" class="btn btn-info" value="Ok">
+                <span class="glyphicon glyphicon-warning-sign"></span>
+                Cancelar
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<p>
+    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.cliente.Id, idConta = ViewBag.idConta })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
