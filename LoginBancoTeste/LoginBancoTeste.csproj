@@ -158,6 +158,10 @@
     <Compile Include="Migrations\201603031744549_LongInvest.Designer.cs">
       <DependentUpon>201603031744549_LongInvest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603101854515_AdicionaInvestimentos.cs" />
+    <Compile Include="Migrations\201603101854515_AdicionaInvestimentos.Designer.cs">
+      <DependentUpon>201603101854515_AdicionaInvestimentos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Investimento.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -350,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603031744549_LongInvest.resx">
       <DependentUpon>201603031744549_LongInvest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603101854515_AdicionaInvestimentos.resx">
+      <DependentUpon>201603101854515_AdicionaInvestimentos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
