@@ -1,0 +1,72 @@
+﻿@model LoginBancoTeste.Models.ViewModels.InvestimentoViewModel
+
+@{
+    ViewBag.Title = "Novo investimento";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+
+}
+
+@if (ViewBag.Error != null) {
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Erro: </strong> @ViewBag.Error
+    </div>
+}
+
+@using (Html.BeginForm()) {
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.numCliente)
+    @Html.HiddenFor(model => model.contaADebitar)
+    @Html.HiddenFor(model => model.data)
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">Novo investimento</h2>
+        </div>
+        <div class="panel-body">
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-2">Tipo:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                        @Html.DropDownListFor(model => model.tipo, (SelectList)ViewBag.tipos, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Valor:</label>
+                    <div class="input-group">
+                        <span id="valor" class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                        @Html.EditorFor(model => model.valor, new { htmlAttributes = new { @class = "form-control", @placeholder = "Valor a investir" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.valor, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-md-2">
+                        <button type="submit" class="btn btn-success" value="Salvar">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Ok
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- form-control -->
+
+        </div><!-- panel-body Fim -->
+    </div>
+}
+<p>
+    <a href="@Url.Action("Investimentos", "Transacoes", new { idCliente = Model.numCliente, idConta = Model.contaADebitar })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
