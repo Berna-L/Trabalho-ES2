@@ -12,7 +12,9 @@ namespace LoginBancoTeste.Models.ViewModels
         public int QtdNotas20 { get; set; }
         public int QtdNotas10 { get; set; }
 
-        public bool Sucesso { get; set; }
+        public bool Erro { get; set; }
+
+        public string DescricaoErro { get; set; }
 
     }
 }

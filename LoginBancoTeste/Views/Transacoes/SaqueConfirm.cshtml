@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-@using (Html.BeginForm("SaqueConfirm"))
+@using (Html.BeginForm("SaqueConfirm", "Transacoes", FormMethod.Post))
 {
     @Html.HiddenFor(model => model.NumeroConta)
     @Html.HiddenFor(model => model.Valor);

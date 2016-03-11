@@ -144,6 +144,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\100_front.jpg" />
+    <Content Include="Content\img\10_front.jpg" />
+    <Content Include="Content\img\20_front.jpg" />
+    <Content Include="Content\img\50_front.jpg" />
+    <Content Include="Content\img\5_front.jpg" />
+    <Content Include="Content\img\bank.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -205,6 +211,7 @@
     <Content Include="Views\Estoques\Edit.cshtml" />
     <Content Include="Views\Estoques\Index.cshtml" />
     <Content Include="Views\Transacoes\SaqueCustomizado.cshtml" />
+    <Content Include="Views\Transacoes\ExibirTroco.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

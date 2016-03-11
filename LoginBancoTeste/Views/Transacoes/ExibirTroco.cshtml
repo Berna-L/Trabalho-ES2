@@ -1,0 +1,46 @@
+﻿@model LoginBancoTeste.Models.ViewModels.EstoqueViewModel
+@{
+    ViewBag.Title = "Exibir Troco";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<h3>Troco</h3>
+
+<ul class="list-group">
+    @if (Model.QtdNotas10 > 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@Model.QtdNotas10</span> <img src="~/Content/img/10_front.jpg" width="200" height="100" />
+        </li>
+    }
+
+    @if (Model.QtdNotas20 > 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@Model.QtdNotas20</span> <img src="~/Content/img/20_front.jpg" width="200" height="100" />
+        </li>
+    }
+
+    @if (Model.QtdNotas50 > 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@Model.QtdNotas50</span> <img src="~/Content/img/50_front.jpg" width="200" height="100" />
+        </li>
+    }
+
+    @if (Model.QtdNotas100 > 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@Model.QtdNotas100</span> <img src="~/Content/img/100_front.jpg" width="200" height="100" />
+        </li>
+    }
+</ul>
+
+@using (Html.BeginForm("Opcoes"))
+{
+    <button type="submit" class="btn btn-success" value="Salvar">
+        <span class="glyphicon glyphicon-ok"></span>
+        Ok
+    </button>
+}
+

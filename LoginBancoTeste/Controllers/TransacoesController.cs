@@ -101,12 +101,18 @@ namespace LoginBancoTeste.Controllers
         [Authorize]
         public ActionResult SaqueConfirm(int? numero, double valor) 
         {
+            if (!(valor > 0) || (valor % 10 != 0))
+            {
+                TempData["Erro"] = "O caixa trabalha com notas de 10, 20, 50 e 100!";
+
+                return RedirectToAction("Saque");
+            }
 
             EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
             entrada.NumeroConta = numero;
-            entrada.Valor = valor*10;
+            entrada.Valor = valor;
 
-            return View(entrada);
+            return View("SaqueConfirm", entrada);
         }
 
         [Authorize]
@@ -132,8 +138,8 @@ namespace LoginBancoTeste.Controllers
             }
             else
             {
-                EstoqueViewModel qtdNotas = calcularNotas(entrada.Valor);
-                if (!qtdNotas.Sucesso)
+                EstoqueViewModel qtdNotas = CalculaNotas(entrada.Valor);
+                if (qtdNotas.Erro)
                 {
                     // neste caso não existe uma quantidade de notas suficiente para sacar
                     resposta = "Notas insuficientes no caixa, escolha outro valor.";
@@ -147,7 +153,8 @@ namespace LoginBancoTeste.Controllers
 
                     TempData["Sucesso"] = "Saque de R$ " + entrada.Valor + " efetuado com sucesso.";
 
-                    return RedirectToAction("Opcoes", "Transacoes", new { numero = entrada.NumeroConta });
+                    //return RedirectToAction("Opcoes", "Transacoes", new { numero = entrada.NumeroConta });
+                    return View("ExibirTroco", qtdNotas);
                 }
             }
 
@@ -257,77 +264,49 @@ namespace LoginBancoTeste.Controllers
             return View();
         }
 
-        private EstoqueViewModel calcularNotas(double valor)
+        private EstoqueViewModel CalculaNotas(double valor)
         {
-            double valorTemp = (valor % 100);
-            Estoque est = this.db.Estoque.First();
-            valor = valor - valorTemp;
-            EstoqueViewModel respEst = new EstoqueViewModel();
-            int temp = (int)valor / 100;
-            //Calculo das notas de 100
-            if (temp <= est.QtdNotas100)
-            {
-                respEst.QtdNotas100 = temp;
-                est.QtdNotas100 -= temp;
-            }
-            else
-            {
-                respEst.QtdNotas100 = est.QtdNotas100;
-                est.QtdNotas100 = 0;
-                valorTemp += valor - (respEst.QtdNotas100 * 100);
-            }
-            //Calculo das notas de 50
-            valorTemp = valor % 50;
-            valor = valor - valorTemp;
+            EstoqueViewModel troco = new EstoqueViewModel();
+            Estoque repositorio = this.db.Estoque.First();
 
-            temp = (int)valor / 50;
+            // calcula o numero de notas de 100
+            while (valor >= 100 && repositorio.QtdNotas100 > 0)
+            {
+                valor -= 100;
+                troco.QtdNotas100++;
+                repositorio.QtdNotas100--;
+            }
 
-            if (temp <= est.QtdNotas50)
+            while (valor >= 50 && repositorio.QtdNotas50 > 0)
             {
-                respEst.QtdNotas50 = temp;
-                est.QtdNotas50 -= temp;
+                valor -= 50;
+                troco.QtdNotas50++;
+                repositorio.QtdNotas50--;
             }
-            else
-            {
-                respEst.QtdNotas50 = est.QtdNotas50;
-                est.QtdNotas50 = 0;
-                valorTemp += valor - (respEst.QtdNotas50 * 50);
-            }
-            //Calculo das notas de 20
-            valorTemp = valor % 20;
-            valor = valor - valorTemp;
 
-            temp = (int)valor / 20;
+            while (valor >= 20 && repositorio.QtdNotas20 > 0)
+            {
+                valor -= 20;
+                troco.QtdNotas20++;
+                repositorio.QtdNotas20--;
+            }
 
-            if (temp <= est.QtdNotas20)
+            while (valor >= 10 && repositorio.QtdNotas10 > 0)
             {
-                respEst.QtdNotas20 = temp;
-                est.QtdNotas20 -= temp;
+                valor -= 10;
+                troco.QtdNotas10++;
+                repositorio.QtdNotas10--;
             }
-            else
-            {
-                respEst.QtdNotas20 = est.QtdNotas20;
-                est.QtdNotas20 = 0;
-                valorTemp += valor - (respEst.QtdNotas20 * 20);
-            }
-            //Calculo das notas de 10
-            valorTemp = valor % 10;
-            valor = valor - valorTemp;
 
-            temp = (int)valor / 10;
+            if (valor > 0)
+            {
+                troco.Erro = true;
+                troco.DescricaoErro = "O banco não possui cedulas suficientes para completar a operação!";
+            }
 
-            if (temp <= est.QtdNotas10)
-            {
-                respEst.QtdNotas10 = temp;
-                est.QtdNotas10 -= temp;
-                respEst.Sucesso = true;
-            }
-            else
-            {
-                respEst.Sucesso = false;
-            }
-            return respEst;
+            return troco;
         }
+
 
     }
 }

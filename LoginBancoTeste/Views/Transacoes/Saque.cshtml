@@ -22,15 +22,15 @@
         <p>Escolha o valor: </p>
         <div class="row">
             <div class="col-lg-6">
-                @Html.ActionLink("R$10,00", "SaqueConfirm", new { numero = Model.Numero, valor = 1 }, new { @class = "btn btn-lg btn-primary btn-block" })
-                @Html.ActionLink("R$40,00", "SaqueConfirm", new { numero = Model.Numero, valor = 4 }, new { @class = "btn btn-lg btn-primary btn-block" })
-                @Html.ActionLink("R$50,00", "SaqueConfirm", new { numero = Model.Numero, valor = 5 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$10,00", "SaqueConfirm", new { numero = Model.Numero, valor = 10 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$40,00", "SaqueConfirm", new { numero = Model.Numero, valor = 40 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$50,00", "SaqueConfirm", new { numero = Model.Numero, valor = 50 }, new { @class = "btn btn-lg btn-primary btn-block" })
                 @Html.ActionLink("Outro Valor", "SaqueCustomizado", Model, new { @class = "btn btn-lg btn-primary btn-block" })
             </div>
             <div class="col-lg-6">
-                @Html.ActionLink("R$20,00", "SaqueConfirm", new { numero = Model.Numero, valor = 2 }, new { @class = "btn btn-lg btn-primary btn-block" })
-                @Html.ActionLink("R$80,00", "SaqueConfirm", new { numero = Model.Numero, valor = 8 }, new { @class = "btn btn-lg btn-primary btn-block" })
-                @Html.ActionLink("R$100,00", "SaqueConfirm", new { numero = Model.Numero, valor = 10 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$20,00", "SaqueConfirm", new { numero = Model.Numero, valor = 20 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$80,00", "SaqueConfirm", new { numero = Model.Numero, valor = 80 }, new { @class = "btn btn-lg btn-primary btn-block" })
+                @Html.ActionLink("R$100,00", "SaqueConfirm", new { numero = Model.Numero, valor = 100 }, new { @class = "btn btn-lg btn-primary btn-block" })
             </div>
         </div>
 
