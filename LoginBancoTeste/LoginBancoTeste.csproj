@@ -202,7 +202,6 @@
     <Content Include="Views\Transacoes\Extrato.cshtml" />
     <Content Include="Views\Estoques\Create.cshtml" />
     <Content Include="Views\Estoques\Delete.cshtml" />
-    <Content Include="Views\Estoques\Details.cshtml" />
     <Content Include="Views\Estoques\Edit.cshtml" />
     <Content Include="Views\Estoques\Index.cshtml" />
     <Content Include="Views\Transacoes\SaqueCustomizado.cshtml" />

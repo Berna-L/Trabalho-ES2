@@ -25,15 +25,12 @@
                     <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
                     <li>@Html.ActionLink("Sobre", "About", "Admin")</li>
                     <li>@Html.ActionLink("Contato", "Contact", "Admin")</li>
+                    <li>@Html.ActionLink("Estoque", "Index", "Estoques")</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @*@if (User.Identity.IsAuthenticated)
-        {
-            @:Olá @User.Identity.Name, @Html.ActionLink("Sair", "Sair", "Autenticador")
-        }*@
 
         @RenderBody()
         <hr />

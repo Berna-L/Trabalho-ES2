@@ -6,7 +6,7 @@
 
 <h2>Estoque</h2>
 
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.QtdNotas10)
@@ -44,9 +44,10 @@
             @Html.DisplayFor(modelItem => item.QtdCheques)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EstoqueID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EstoqueID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EstoqueID })
+            <a href="@Url.Action("Edit", "Estoques", new { id = item.EstoqueID })" class="btn btn-xs btn-primary">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Editar
+            </a>
         </td>
     </tr>
 }

@@ -88,31 +88,23 @@ namespace LoginBancoTeste.Controllers
             return View(conta);
         }
 
-        //[Authorize]
-        //public ActionResult SaqueCustomizado(double valor)
-        //{
-        //    EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
-        //    return View(entrada);
-        //}
-
-        //[HttpPost]
-        //public ActionResult Index(EntradaSaqueViewModel entrada)
-        //{
-        //    if (!(entrada.Valor > 0) || (entrada.Valor % 10 != 0))
-        //    {
-        //        ViewBag.Erro = "O caixa trabalha com notas de 10, 20, 50 e 100!";
-
-        //        return View(entrada);
-        //    }
-        //    return RedirectToAction("SaqueConfirm", entrada);
-        //}
-
+        [Authorize]
+        public ActionResult SaqueCustomizado(Conta conta)
+        {
+            if (conta == null)
+            {
+                return HttpNotFound();
+            }
+            return View("SaqueCustomizado", conta);
+        }
+        
         [Authorize]
         public ActionResult SaqueConfirm(int? numero, double valor) 
         {
+
             EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
             entrada.NumeroConta = numero;
-            entrada.Valor = valor;
+            entrada.Valor = valor*10;
 
             return View(entrada);
         }
@@ -160,7 +152,7 @@ namespace LoginBancoTeste.Controllers
             }
 
             ViewBag.Sucesso = resposta;
-            return View(conta);
+            return View(entrada);
         }
 
         [Authorize]
@@ -265,7 +257,7 @@ namespace LoginBancoTeste.Controllers
             return View();
         }
 
-        public EstoqueViewModel calcularNotas(double valor)
+        private EstoqueViewModel calcularNotas(double valor)
         {
             double valorTemp = (valor % 100);
             Estoque est = this.db.Estoque.First();

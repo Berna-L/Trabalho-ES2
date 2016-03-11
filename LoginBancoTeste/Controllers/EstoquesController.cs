@@ -21,21 +21,6 @@ namespace LoginBancoTeste.Controllers
             return View(db.Estoque.ToList());
         }
 
-        // GET: Estoques/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Estoque estoque = db.Estoque.Find(id);
-            if (estoque == null)
-            {
-                return HttpNotFound();
-            }
-            return View(estoque);
-        }
-
         // GET: Estoques/Create
         public ActionResult Create()
         {
