@@ -36,11 +36,10 @@
     }
 </ul>
 
-@using (Html.BeginForm("Opcoes"))
-{
-    <button type="submit" class="btn btn-success" value="Salvar">
-        <span class="glyphicon glyphicon-ok"></span>
-        Ok
-    </button>
-}
+<a href="@Url.Action("Opcoes", "Transacoes", new { numero = ViewBag.NumeroConta })" class="btn btn-success">
+    <span class="glyphicon glyphicon-ok"></span>
+    OK
+</a>
+
+
 

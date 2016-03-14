@@ -4,19 +4,11 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-@if (TempData["ErroTroco"] != null)
+@if (TempData["Erro"] != null)
 {
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Erro!</strong> @TempData["ErroTroco"]
-    </div>
-}
-
-@if (ViewBag.Erro != null)
-{
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Erro!</strong> @ViewBag.Erro
+        <strong>Erro!</strong> @TempData["Erro"]
     </div>
 }
 
@@ -36,9 +28,9 @@
                     <label class="sr-only" for="exampleInputAmount">Valor (em reais)</label>
                     <div class="input-group">
                         <div class="input-group-addon">$</div>
-                        @Html.TextBox("valor", null, new { @class = "form-control", @placeholder = "Valor", @id = "exampleInputAmount" })
+                        @Html.TextBox("valor", 0, new { @class = "form-control", @placeholder = "Valor", @id = "exampleInputAmount" })
                         @*<input type="text" class="form-control" id="exampleInputAmount" placeholder="Valor">*@
-                        <div class="input-group-addon">0,00</div>
+                        <div class="input-group-addon">,00</div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success" value="Salvar">

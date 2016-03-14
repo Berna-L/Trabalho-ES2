@@ -101,11 +101,19 @@ namespace LoginBancoTeste.Controllers
         [Authorize]
         public ActionResult SaqueConfirm(int? numero, double valor) 
         {
-            if (!(valor > 0) || (valor % 10 != 0))
-            {
-                TempData["Erro"] = "O caixa trabalha com notas de 10, 20, 50 e 100!";
+            Conta conta = this.db.Contas.Find(numero);
 
-                return RedirectToAction("Saque");
+            if ((valor <= 0) || (valor % 10 != 0))
+            {
+                TempData["Erro"] = "Valor incorreto. O caixa trabalha com notas de 10, 20, 50 e 100.";                
+
+                return RedirectToAction("SaqueCustomizado", conta);
+            }
+
+            if (conta.Saldo < valor)
+            {
+                TempData["Erro"] = "Saldo insuficiente.";
+                return RedirectToAction("Saque", conta);
             }
 
             EntradaSaqueViewModel entrada = new EntradaSaqueViewModel();
@@ -132,34 +140,26 @@ namespace LoginBancoTeste.Controllers
                 return HttpNotFound();
             }
 
-            if (conta.Saldo < entrada.Valor)
+            EstoqueViewModel qtdNotas = CalculaNotas(entrada.Valor);
+            if (qtdNotas.Erro)
             {
-                resposta = "Saldo insuficiente.";
+                // neste caso não existe uma quantidade de notas suficiente para sacar
+                TempData["Erro"] = "Notas insuficientes no caixa, escolha outro valor.";
+                return RedirectToAction("Saque", new { numero = conta.Numero });
             }
             else
             {
-                EstoqueViewModel qtdNotas = CalculaNotas(entrada.Valor);
-                if (qtdNotas.Erro)
-                {
-                    // neste caso não existe uma quantidade de notas suficiente para sacar
-                    resposta = "Notas insuficientes no caixa, escolha outro valor.";
-                }
-                else
-                {
-                    // desconta o saldo pelo saque efetuado
-                    conta.Saldo -= entrada.Valor;
-                    // salva as alterações no banco de dados
-                    db.SaveChanges();
+                // desconta o saldo pelo saque efetuado
+                conta.Saldo -= entrada.Valor;
+                // salva as alterações no banco de dados
+                db.SaveChanges();
 
-                    TempData["Sucesso"] = "Saque de R$ " + entrada.Valor + " efetuado com sucesso.";
+                TempData["Sucesso"] = "Saque de R$ " + entrada.Valor + " efetuado com sucesso.";
+                ViewBag.NumeroConta = conta.Numero;
 
-                    //return RedirectToAction("Opcoes", "Transacoes", new { numero = entrada.NumeroConta });
-                    return View("ExibirTroco", qtdNotas);
-                }
+                return View("ExibirTroco", qtdNotas);
             }
 
-            ViewBag.Sucesso = resposta;
-            return View(entrada);
         }
 
         [Authorize]
