@@ -282,3 +282,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+LoginBancoTeste/Views/Shared/_Layout.cshtml
+LoginBancoTeste/Views/Shared/_Layout.cshtml

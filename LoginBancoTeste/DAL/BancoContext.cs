@@ -15,6 +15,9 @@ namespace LoginBancoTeste.DAL
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Estoque> Estoque { get; set; }
+        public DbSet<Extrato> Extratos { get; set; }
+        public DbSet<Investimento> Investimentos { get; set; }
+        public DbSet<TipoInvestimento> TiposInvestimento { get; set; }
 
     }
 }

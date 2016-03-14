@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
 }
 
-<h3>Troco</h3>
+<h3>Retire seu dinheiro</h3>
 
 <ul class="list-group">
     @if (Model.QtdNotas10 > 0)
@@ -36,10 +36,12 @@
     }
 </ul>
 
-<a href="@Url.Action("Opcoes", "Transacoes", new { numero = ViewBag.NumeroConta })" class="btn btn-success">
-    <span class="glyphicon glyphicon-ok"></span>
-    OK
-</a>
+<p>
+    <a href="@Url.Action("Opcoes", "Transacoes", new { numero = ViewBag.NumeroConta })" class="btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span>
+        OK
+    </a>
+</p>
 
 
 

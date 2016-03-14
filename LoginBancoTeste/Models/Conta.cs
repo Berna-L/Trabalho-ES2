@@ -8,7 +8,7 @@ namespace LoginBancoTeste.Models
 {
     public enum TipoDeConta
     {
-        CORRENTE, POUPANCA
+        Corrente, Poupanca
     }
 
     public class Conta
@@ -23,6 +23,8 @@ namespace LoginBancoTeste.Models
         [Required]
         [Display(Name = "Tipo de conta")]
         public TipoDeConta TipoDeConta { get; set; }
+
+        public virtual List<Extrato> Extrato { get; set; }
 
         public virtual Cliente Cliente { get; set; }
 

@@ -19,17 +19,17 @@
 
 @if(Model != null)
 {
-    <h4>Bem vindo, @Model.Nome</h4>
-
     <div class="panel panel-info">
         <!-- Default panel contents -->
-        <div class="panel-heading">Contas</div>
+        <div class="panel-heading">
+            <h2 class="panel-title">Contas</h2>
+        </div>
         <div class="panel-body">
-            <p>Selecione a conta o qual deseja operar: </p>
+            <p>Bem vindo <strong>@Model.Nome</strong>, selecione a conta o qual deseja operar: </p>
         </div>
 
         <!-- Table -->
-        <table class="table table-hover">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Numero</th>
@@ -41,7 +41,7 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
+                            <a class="btn btn-primary btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
                                 @Html.DisplayFor(modelItem => item.Numero)
                             </a>
                         </td>
