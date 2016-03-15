@@ -79,6 +79,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\AutenticadorControllerTest.cs" />
     <Compile Include="WebServer.cs" />
     <Compile Include="Controllers\ClientesControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
