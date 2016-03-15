@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201603141633314_AddSaqueToMaster.Designer.cs">
       <DependentUpon>201603141633314_AddSaqueToMaster.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603151940061_AddNewPropertiesToProject.cs" />
+    <Compile Include="Migrations\201603151940061_AddNewPropertiesToProject.Designer.cs">
+      <DependentUpon>201603151940061_AddNewPropertiesToProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\EntradaSaqueViewModel.cs" />
     <Compile Include="Models\ViewModels\EstoqueViewModel.cs" />
     <Compile Include="Controllers\InvestimentosController.cs" />
@@ -269,8 +273,6 @@
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
     <Content Include="Content\bootstrap-datepicker3.standalone.min.css.map" />
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker3.min.css.map" />
@@ -445,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603141633314_AddSaqueToMaster.resx">
       <DependentUpon>201603141633314_AddSaqueToMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603151940061_AddNewPropertiesToProject.resx">
+      <DependentUpon>201603151940061_AddNewPropertiesToProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
