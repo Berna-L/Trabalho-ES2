@@ -71,13 +71,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\de\MigraDoc.RtfRendering.resources.dll</HintPath>
     </Reference>
-    <Reference Include="PdfSharp, Version=1.31.1789.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\PdfSharp.dll</HintPath>
+    <Reference Include="PdfSharp">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
     </Reference>
-    <Reference Include="PdfSharp.Charting, Version=1.31.1789.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Meus Arquivos\UFF\Engenharia de Software 2\PDFSharp-MigraDocFoundation-1_31\GDI+\PdfSharp.Charting.dll</HintPath>
+    <Reference Include="PdfSharp.Charting">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.resources, Version=1.31.1789.0, Culture=de, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
