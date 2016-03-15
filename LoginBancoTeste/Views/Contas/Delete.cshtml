@@ -1,32 +1,52 @@
 ﻿@model LoginBancoTeste.Models.Conta
-
 @{
     ViewBag.Title = "Delete";
 }
 
 <h2>Excluir</h2>
-
+<hr />
 <h3>Tem certeza que deseja excluir esta conta?</h3>
-<div>
-    <h4>Conta</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Saldo)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Saldo)
-        </dd>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cliente</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Saldo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Saldo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TipoDeConta)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TipoDeConta)
+            </dd>
+        </dl>
 
-    </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <dl class="dl-horizontal">
+                <dd>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Excluir
+                    </button>
+                </dd>
+            </dl>
+        }
+    </div>
 </div>
+
+<p>
+    <a href="@Url.Action("Details", "Clientes", new { id = Model.Cliente.Id })" class="btn btn-sm btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+

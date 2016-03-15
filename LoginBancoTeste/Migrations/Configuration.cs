@@ -9,8 +9,7 @@ namespace LoginBancoTeste.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "LoginBancoTeste.DAL.BancoContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(LoginBancoTeste.DAL.BancoContext context)

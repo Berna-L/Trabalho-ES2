@@ -1,0 +1,55 @@
+﻿@model IEnumerable<LoginBancoTeste.Models.Estoque>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Estoque</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdNotas10)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdNotas20)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdNotas50)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdNotas100)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QtdCheques)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdNotas10)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdNotas20)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdNotas50)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdNotas100)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QtdCheques)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "Estoques", new { id = item.EstoqueID })" class="btn btn-xs btn-primary">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Editar
+            </a>
+        </td>
+    </tr>
+}
+
+</table>

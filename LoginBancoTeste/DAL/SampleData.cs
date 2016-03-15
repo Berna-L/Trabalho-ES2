@@ -39,14 +39,14 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 5340000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         },
                         new Conta 
                         {
                             Saldo = 1280000,
-                            TipoDeConta = TipoDeConta.POUPANCA,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Poupanca
                         }
                     },
                     Username = "111",
@@ -68,8 +68,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 8000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },
                     Username = "222",
@@ -91,8 +91,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 16500,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },
                     Username = "333",
@@ -114,8 +114,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 65000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },   
                     Username = "444",
@@ -137,21 +137,21 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 759000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
 
                         },
                         new Conta 
                         {
                             Saldo = 92000,
-                            TipoDeConta = TipoDeConta.POUPANCA,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Poupanca
                         },
                         new Conta 
                         {
                             Saldo = 12000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },    
                     Username = "555",
@@ -173,8 +173,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 900,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },                    
                     Username = "666",
@@ -196,8 +196,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 25000,
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },           
                     Username = "777",
@@ -219,8 +219,8 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 48900, 
-                            TipoDeConta = TipoDeConta.CORRENTE,
-                            agencia = agencia
+                            agencia = agencia,
+                            TipoDeConta = TipoDeConta.Corrente
                         }
                     },     
                     Username = "888",
@@ -228,19 +228,33 @@ namespace LoginBancoTeste.DAL
                 }
             };
 
+            var tiposInvestimento = new List<TipoInvestimento> {
+                new TipoInvestimento {
+                    nome = "Tipo 1",
+                    jurosDia = 1.000845
+                },
+                new TipoInvestimento {
+                    nome = "Tipo 2",
+                    jurosDia = 1.001094
+                }
+            };
+
             clientes.ForEach(c => context.Clientes.Add(c));
+            tiposInvestimento.ForEach(t => context.TiposInvestimento.Add(t));
             context.SaveChanges();
 
-            //var usuarios = new List<ContaDeUsuario> {
-            //    new ContaDeUsuario 
-            //    {
-            //        Username = "joao@banco.br",
-            //        Password = "senha123",
-            //        TipoDeUsuario = TipoDeUsuario.FUNCIONARIO
-            //    }                
-            //};
-            //usuarios.ForEach(f => context.Usuarios.Add(f));
-            //context.SaveChanges();
+            var investimentos = new List<Investimento> {
+                new Investimento {
+                    cliente = context.Clientes.Find(1),
+                    tipo_invest = context.TiposInvestimento.Find(1),
+                    data = DateTime.Today.AddYears(-1),
+                    valor_ini = 600,
+                    valor_acc = 600
+                }
+            };
+
+            investimentos.ForEach(i => context.Investimentos.Add(i));
+            context.SaveChanges();
 
             base.Seed(context);
         }

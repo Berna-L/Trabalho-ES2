@@ -30,7 +30,7 @@ namespace LoginBancoTeste.Models
 
         public virtual List<Conta> Contas { get; set; }
 
-        [Display(Name = "Login")]
+        [Display(Name = "Nº do Cartão")]
         public string Username { get; set; }
 
         [Display(Name = "Senha")]

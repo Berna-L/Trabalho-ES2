@@ -8,30 +8,48 @@
 {
     <div class="jumbotron">
             <p class="lead">Acesse sua conta conta realizando o login</p>
-            <p>@Html.ActionLink("Sign in", "Formulario", "Autenticador", null, new { @class = "btn btn-primary", @role = "button" })</p>
+            <p>
+                <a class="btn btn-primary" href="@Url.Action("Formulario","Autenticador")">
+                    <span class="glyphicon glyphicon-off"></span>
+                    Sign in
+                </a>
+            </p>
         </div>
 }
 
-@if (Model != null)
+@if(Model != null)
 {
-    <p>Bem vindo, @Model.Nome</p>
+    <div class="panel panel-info">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2 class="panel-title">Contas</h2>
+        </div>
+        <div class="panel-body">
+            <p id="mensagem">Bem vindo <strong>@Model.Nome</strong>, selecione a conta o qual deseja operar: </p>
+        </div>
 
-    <h3>Selecione a conta que deseja operar</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Tipo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Contas)
-            {
+        <!-- Table -->
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@Html.ActionLink(string.Concat(item.Numero), "Opcoes", new { numero = item.Numero }, new { @class = "list-group-item" })</td>
-                    <td>@Html.DisplayFor(modelItem => item.TipoDeConta)</td>
+                    <th>Numero</th>
+                    <th>Tipo</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Contas)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-primary btn-block" href="@Url.Action("Opcoes", "Transacoes", new { numero = item.Numero })" role="button">
+                                @Html.DisplayFor(modelItem => item.Numero)
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.TipoDeConta)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 }

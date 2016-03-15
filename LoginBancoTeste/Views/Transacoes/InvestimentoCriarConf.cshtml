@@ -1,0 +1,80 @@
+﻿@model LoginBancoTeste.Models.ViewModels.InvestimentoViewModel
+@{
+    ViewBag.Title = "Confirmação investimento";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+@using (Html.BeginForm("InvestimentoCriarConf", "Transacoes", FormMethod.Post)) {
+    @Html.HiddenFor(model => model.contaADebitar)
+    @Html.HiddenFor(model => model.data)
+    @Html.HiddenFor(model => model.numCliente)
+    @Html.HiddenFor(model => model.tipo)
+    @Html.HiddenFor(model => model.valor)
+    @Html.HiddenFor(model => model.confirmado)
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Confirmação de investimento </h3>
+        </div>
+        <div class="panel-body">
+            <p>Deseja realmente investir @Html.DisplayFor(model => model.valor)  da conta @Html.DisplayFor(model => model.contaADebitar): </p>
+            <dl class="dl-horizontal">
+                <dt>
+                    Tipo:
+                </dt>
+                <dd>
+                    @ViewBag.Tipo
+                </dd>
+                <dt>
+                    Valor:
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.valor)
+                </dd>
+                <br />
+                <dt>
+                    Juros mês:
+                </dt>
+                <dd>
+                    @ViewBag.JurosMes%
+                </dd>
+                <dt>
+                    Simulação um mês:
+                </dt>
+                <dd>
+                    R$ @ViewBag.SimulacaoMes
+                </dd>
+                <br />
+                <dt>
+                    Juros ano:
+                </dt>
+                <dd>
+                    @ViewBag.Jurosano%
+                </dd>
+                <dt>
+                    Simulação um ano:
+                </dt>
+                <dd>
+                    R$ @ViewBag.SimulacaoAno
+                </dd>
+            </dl>
+
+            <div class="col-sm-offset-2 col-md-2">
+                <button type="submit" class="btn btn-success" value="Ok">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Ok
+                </button>
+            </div>
+
+        </div>
+    </div>
+}
+<p>
+    <a href="@Url.Action("InvestimentoCriar", "Transacoes", new { idCliente = Model.numCliente, idConta = Model.contaADebitar })" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Voltar
+    </a>
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
