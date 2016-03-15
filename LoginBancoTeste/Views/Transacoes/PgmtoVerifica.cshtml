@@ -1,0 +1,20 @@
+﻿@model LoginBancoTeste.Models.ViewModels.PagamentoViewModel
+@{
+    ViewBag.Title = "Verificação do Pagamento";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<h2 align="center">Verificação do Pagamento</h2>
+
+<div style="margin-top: 10%; font-size:large;">
+    <p>Titular da Conta: @Html.DisplayFor(model => Model.conta.Cliente.Nome)</p>
+    <p>Conta: @Html.DisplayFor(model => Model.conta.Numero)</p>
+    <p>Valor do pagamento: @Html.DisplayFor(model => Model.valor)</p>
+    <p>Data de agendamento do pagamento: @Html.DisplayFor(model => Model.data_pagam)</p>
+    <p>Data de realização do pagamento: @Html.DisplayFor(model => Model.data_realiza)</p>
+</div>
+
+<div align="center" style="margin-top: 10%">
+    <a href="@Url.Action("PgmtoConfirma")"> <button class="btn-success btn-lg">Confirmar</button> </a>
+    <a href="@Url.Action("Pagamento", new {numero = Model.numConta, errorMsg = ""})"> <button class="btn-primary btn-lg" style="margin-left: 50%;">Voltar</button> </a>
+</div>

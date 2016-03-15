@@ -26,5 +26,7 @@ namespace LoginBancoTeste.Models
 
         public virtual Cliente Cliente { get; set; }
 
+        public virtual Agencia agencia { get; set; }
+
     }
 }

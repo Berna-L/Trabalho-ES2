@@ -1,0 +1,56 @@
+﻿@model LoginBancoTeste.Models.ViewModels.PagamentoViewModel
+@{   ViewBag.Title = "Pagamento";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<h2 align="center">Pagamentos</h2>
+<h4 align="center" style="font-size:small ;color:red"> @Html.DisplayFor(model => Model.errorMsg) </h4>
+<!--Formato de boleto adotado para este projeto:
+AAABCCCCDDDDDDDDDD
+AAA: Numero do banco
+B: Moeda (4 para Real, apenas Real esta sendo aceito)
+CCCC: Fator de vencimento (diferenca em dias entre o vencimento e 7/10/1997); 0000 para vencimento nao definido
+DDDDDDDDDD: valor do pagamento (8 inteiros e 2 decimais); 0000000000 para valor nao definido-->
+
+@using (Ajax.BeginForm("PgmtoVerifica", "Transacoes", new {numero = Model.numConta} ,new AjaxOptions {}))
+{
+    <fieldset>
+        <div class="form-group" style="font-size:large; margin-top:10%" has-warning>
+            <label>Digite o código do boleto</label>
+            <div class="editor-field">
+                @Html.EditorFor(model => Model.cod_boleto)
+            </div>
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => Model.cod_boleto, "", new { @class = "text-danger" })
+            </div>
+            <br>
+            <label>Digite a data do pagamento</label>
+            <div class="editor-field">
+                @Html.EditorFor(model => Model.data_pagam)
+            </div>
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => Model.data_pagam, "", new { @class = "text-danger" })
+            </div>
+            <br>
+            <label>Descrição adicional</label>
+            <div class="editor-field">
+                @Html.EditorFor(model => Model.desc_adicional)
+            </div>
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => Model.desc_adicional, "", new { @class = "text-danger" })
+            </div>
+            <br>
+            <div align="center">
+                <button input type="submit" class="btn-success btn-lg" id="confirmar"> Confirmar </button>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<div align="center">
+    <a href="@Url.Action("Opcoes", "Transacoes", new {numero = Model.numConta})"> <button class="btn-primary btn-lg" style="margin-top: 10%;">Voltar</button> </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

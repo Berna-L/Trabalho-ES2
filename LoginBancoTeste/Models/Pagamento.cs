@@ -17,7 +17,8 @@ namespace LoginBancoTeste.Models
         public String descricao { get; set; }
         public DateTime data_venc { get; set; }
         public DateTime data_pagam { get; set; }
-        public DateTime data_realiz { get; set; }
-        public DateTime data_agendada { get; set; }
+        public DateTime data_realiza { get; set; }
+
+        public Conta conta { get; set; }
     }
 }
