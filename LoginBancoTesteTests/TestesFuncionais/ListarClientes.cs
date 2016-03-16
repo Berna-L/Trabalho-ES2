@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using LoginBancoTesteTests;
+using LoginBancoTeste.DAL;
 
 namespace SeleniumTests
 {

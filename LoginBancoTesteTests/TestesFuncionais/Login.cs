@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using LoginBancoTesteTests;
+using LoginBancoTeste.DAL;
 
 namespace SeleniumTests
 {
@@ -17,8 +18,6 @@ namespace SeleniumTests
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-
-
 
         [SetUp]
         public void SetupTest()

@@ -11,6 +11,16 @@ namespace LoginBancoTeste.DAL
     {
         protected override void Seed(BancoContext context)
         {
+            var banco = new Banco
+            {
+                nome = "Banco Exemplo"
+            };
+
+            var agencia = new Agencia
+            {
+                banco = banco
+            };
+
             var clientes = new List<Cliente>
             {
                 new Cliente 
@@ -29,11 +39,13 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 5340000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         },
                         new Conta 
                         {
                             Saldo = 1280000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Poupanca
                         }
                     },
@@ -56,6 +68,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 8000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },
@@ -78,6 +91,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 16500,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },
@@ -100,6 +114,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 65000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },   
@@ -122,17 +137,20 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 759000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
 
                         },
                         new Conta 
                         {
                             Saldo = 92000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Poupanca
                         },
                         new Conta 
                         {
                             Saldo = 12000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },    
@@ -155,6 +173,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 900,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },                    
@@ -177,6 +196,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 25000,
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },           
@@ -199,6 +219,7 @@ namespace LoginBancoTeste.DAL
                         new Conta 
                         {
                             Saldo = 48900, 
+                            agencia = agencia,
                             TipoDeConta = TipoDeConta.Corrente
                         }
                     },     
@@ -220,6 +241,19 @@ namespace LoginBancoTeste.DAL
 
             clientes.ForEach(c => context.Clientes.Add(c));
             tiposInvestimento.ForEach(t => context.TiposInvestimento.Add(t));
+            context.SaveChanges();
+
+            var estoque = new List<Estoque>
+            {
+                new Estoque() {
+                    QtdNotas10 = 20,
+                    QtdNotas20 = 20,
+                    QtdNotas50 = 20,
+                    QtdNotas100 = 20,
+                    QtdCheques = 20
+                }
+            };
+            estoque.ForEach(s => context.Estoque.Add(s));
             context.SaveChanges();
 
             var investimentos = new List<Investimento> {

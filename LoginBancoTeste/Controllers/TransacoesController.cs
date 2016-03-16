@@ -7,6 +7,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using LoginBancoTeste.Models.ViewModels;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 
 namespace LoginBancoTeste.Controllers
 {
@@ -78,8 +82,8 @@ namespace LoginBancoTeste.Controllers
         {
             if (numero == null)
             {
-                return View();
-            }
+            return View();
+        }
 
             Conta conta = this.db.Contas.Find(numero);
 
@@ -124,6 +128,98 @@ namespace LoginBancoTeste.Controllers
             entrada.Valor = valor;
 
             return View("SaqueConfirm", entrada);
+        }
+
+        public ActionResult EmissaoCheque(int numero)
+        {            
+            EmChequeViewModel ecvm = new EmChequeViewModel();
+            ecvm.numConta = numero;
+            return View(ecvm);
+        }
+
+        [HttpPost]
+        public ActionResult ImpCheques(EmChequeViewModel ecvm, int numConta)
+        {
+            if (ecvm.qtdCheque < 4 || ecvm.qtdCheque > 20)
+            {
+                return RedirectToAction("EmissaoCheque", new {numero = ecvm.qtdCheque});
+            }
+            else {
+                Conta conta = this.db.Contas.Find(numConta);
+                if (conta == null)
+                {
+                    return HttpNotFound();
+                }
+                long numCheque;
+
+                for (int i = 0; i < ecvm.qtdCheque; i++)
+                {
+                    Cheque cheque = new Cheque();
+                    String detalhes;
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Cheques.Add(cheque);
+                        db.SaveChanges();
+                    }
+
+                    PdfDocument pdf = new PdfDocument();
+                    PdfPage pdfPage = pdf.AddPage();
+                    XGraphics graph = XGraphics.FromPdfPage(pdfPage);
+                    XFont font = new XFont("Verdana", 14, XFontStyle.Bold);
+
+                    numCheque = cheque.numCheque;
+                    detalhes = "Agência "+ conta.agencia.numAgencia + "| Banco " + conta.agencia.banco.numBanco + "| Conta " + conta.Numero + "| Número do Cheque " + numCheque;
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "Pague por este cheque a quantia de";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 50, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 55, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "e centavos acima";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 150, 105, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 110, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "ou à sua ordem";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 150, 160, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(0, 165, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = ",       de                        de 20";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 250, 215, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Black, new XRect(pdfPage.Width.Point - 350, 220, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    detalhes = "____________________________________";
+                    graph.DrawString(detalhes, font, XBrushes.Gray, new XRect(pdfPage.Width.Point - 350, 270, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.TopLeft);
+
+                    String saida = ecvm.dirSaida + "cheque" + numCheque + ".pdf";
+
+                    try
+                    {
+                        pdf.Save(saida);
+                        ecvm.msgControle = "Arquivo gerado";
+                    }
+                    catch (UnauthorizedAccessException uae)
+                    {
+                        ecvm.msgControle = "Impossível gerar arquivo no diretório solicitado";
+                        return View(ecvm);
+                    }
+                    catch (System.IO.IOException io)
+                    {
+                        ecvm.msgControle = "Erro na escrita dos dados";
+                        return View(ecvm);
+                    }
+                }
+
+                return View(ecvm);
+            }
         }
 
         [Authorize]
@@ -327,9 +423,9 @@ namespace LoginBancoTeste.Controllers
         public ActionResult Deposito(int? numero)
         {
             if (numero == null)
-            {
-                return View();
-            }
+        {
+            return View();
+        }
             DepositoViewModel deposito = new DepositoViewModel();
             deposito.NumeroConta = numero;
 
@@ -491,14 +587,14 @@ namespace LoginBancoTeste.Controllers
             }
 
             while (valor >= 10 && repositorio.QtdNotas10 > 0)
-            {
+        {
                 valor -= 10;
                 troco.QtdNotas10++;
                 repositorio.QtdNotas10--;
-            }
+        }
 
             if (valor > 0)
-            {
+        {
                 troco.Erro = true;
                 troco.DescricaoErro = "O banco não possui cedulas suficientes para completar a operação!";
             }
@@ -506,6 +602,179 @@ namespace LoginBancoTeste.Controllers
             return troco;
         }
 
+        public ActionResult Pagamento(int numero, String errorMsg)
+        {
+            PagamentoViewModel pvm = new PagamentoViewModel();
+            pvm.numConta = numero;
+            pvm.errorMsg = errorMsg;
+            return View(pvm);
+        }
+
+        public ActionResult PgmtoConfirma(PagamentoViewModel pvm)
+        {
+            PagamentoSingleton pgmto = PagamentoSingleton.Instance;
+            Conta conta = this.db.Contas.Find(pgmto.numConta);
+
+            if (conta == null)
+            {
+                return HttpNotFound();
+            }
+
+            pvm.cod_boleto = pgmto.cod_boleto;
+            pvm.conta = conta;
+            pvm.data_pagam = pgmto.data_pagam;
+            pvm.data_realiza = pgmto.data_realiza;
+            pvm.data_venc = pgmto.data_venc;
+            pvm.desc_adicional = pgmto.descricao;
+            pvm.valor = pgmto.valor;
+
+            Pagamento pagamento = new Pagamento();
+            pagamento.cod_boleto = pvm.cod_boleto;
+            pagamento.conta = pvm.conta;
+            pagamento.data_pagam = pvm.data_pagam.ToUniversalTime();
+            pagamento.data_realiza = pvm.data_realiza.ToUniversalTime();
+            pagamento.data_venc = pvm.data_venc.ToUniversalTime();
+            pagamento.descricao = pvm.desc_adicional;
+            pagamento.valor = pvm.valor;
+
+            if (ModelState.IsValid)
+            {
+                db.Pagamentos.Add(pagamento);
+                db.SaveChanges();
+                pvm.numeroPgmto = pagamento.id;
+            }
+
+            return View(pvm);
+        }
+
+        public ActionResult PgmtoVencido()
+        {
+            return View();
+        }
+
+        public ActionResult PgmtoVerifica(PagamentoViewModel pvm, int? numero)
+        {
+            PagamentoSingleton pgmto = PagamentoSingleton.Instance;
+            if (numero == 0)
+            {
+                pgmto.valor = pvm.valor;
+                pvm.cod_boleto = pgmto.cod_boleto;
+                pvm.data_pagam = pgmto.data_pagam;
+                pvm.data_realiza = pgmto.data_realiza;
+                pvm.data_venc = pgmto.data_venc;
+                pvm.desc_adicional = pgmto.descricao;
+                pvm.numConta = pgmto.numConta;
+            }
+            else {
+                pgmto = null;
+                pgmto = PagamentoSingleton.Instance;
+            }
+            if (numero == null)
+            {
+                return View();
+            }
+
+            Conta conta;
+            if (numero != 0)
+            {
+                conta = this.db.Contas.Find(numero);
+            }
+            else
+            {
+                conta = this.db.Contas.Find(pgmto.numConta);
+            }
+
+            if (conta == null)
+            {
+                return HttpNotFound();
+            }
+            pvm.conta = conta;
+            pvm.numConta = conta.Numero;
+            if(numero != 0) pgmto.numConta = conta.Numero;
+            
+            // codigo do boleto completo
+            long cod_boleto = pvm.cod_boleto;
+            if (numero != 0) pgmto.cod_boleto = cod_boleto;
+            int cod_banco = (int)(cod_boleto / Math.Pow(10,15));
+
+            //codigo do boleto sem 3 digitos
+            cod_boleto = cod_boleto - cod_banco * (long)Math.Pow(10, 15);
+            int cod_moeda = (int)(cod_boleto / Math.Pow(10, 14));
+
+            //codigo do boleto sem 4 digitos
+            cod_boleto = cod_boleto - cod_moeda * (long)Math.Pow(10, 14);
+            int cod_fatvenc = (int)(cod_boleto / Math.Pow(10, 10));
+            pvm.cod_fatvenc = cod_fatvenc; //Apenas para tratar boletos sem vencimento
+
+            //codigo do boleto sem 8 digitos
+            cod_boleto = cod_boleto - cod_fatvenc * (long)Math.Pow(10, 10);
+            double valor = (double)cod_boleto / 100;
+
+            Boolean erro_boleto = false;
+            String msgErro = "";
+
+            Banco banco = this.db.Bancos.Where(ban => cod_banco == ban.numBanco).SingleOrDefault();
+
+            if (pvm.conta.Saldo < valor)
+            {
+                erro_boleto = true;
+                msgErro = "Saldo insuficiente para este pagamento.";
+            }
+            if (cod_moeda != 4)
+            {
+                erro_boleto = true;
+                msgErro = "Código de boleto inválido. Esse caixa só aceita pagamentos em Real.";
+            }
+            if (banco == null)
+            {
+                erro_boleto = true;
+                msgErro = "Código de boleto inválido. Banco não existe.";
+            }
+
+            if (erro_boleto)
+                return RedirectToAction("Pagamento", new { numero = pvm.numConta, errorMsg = msgErro });
+
+            DateTime hoje = DateTime.Today;
+            DateTime base_venc = new DateTime(1997, 10, 07);
+            DateTime venc = base_venc.AddDays(cod_fatvenc);
+            pvm.data_realiza = pvm.data_pagam;
+            pvm.valor = valor;
+            if (numero != 0)
+            {
+                pgmto.data_venc = venc;
+                pgmto.data_pagam = pvm.data_pagam;
+                pgmto.valor = valor;
+            }
+
+            Boolean menor = (venc < hoje);
+            if (menor){
+                return RedirectToAction("PgmtoVencido");
+            }
+            else
+            {
+                if((venc == hoje) && (hoje.Hour >= 16))
+                {
+                    pvm.data_realiza = hoje.AddDays(1);
+                }
+            }
+            if (numero != 0) pgmto.data_realiza = pvm.data_realiza;
+
+            if (valor == 0 && pgmto.valor == 0)
+            {
+                return RedirectToAction("PgmtoVlrVenc");
+            }
+
+            if (numero != 0) pgmto.descricao = pvm.desc_adicional;
+            pvm.valor = pgmto.valor;
+
+            return View(pvm);
+        }
+
+        public ActionResult PgmtoVlrVenc()
+        {
+            PagamentoViewModel pvm = new PagamentoViewModel();
+            return View(pvm);
+        }
 
     }
 }
