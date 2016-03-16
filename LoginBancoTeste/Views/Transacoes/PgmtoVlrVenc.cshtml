@@ -1,0 +1,35 @@
+﻿@model LoginBancoTeste.Models.ViewModels.PagamentoViewModel
+@{
+    ViewBag.Title = "PgmtoVlrVenc";
+    Layout = "~/Views/Shared/_TransacoesLayout.cshtml";
+}
+
+<h2 align="center">Pagamentos</h2>
+
+    @using (Ajax.BeginForm("PgmtoVerifica", "Transacoes", new {numero = 0}, new AjaxOptions { }))
+    {
+        <fieldset>
+            <div class="form-group" style="font-size:large; margin-top:10%" has-warning>
+                <label>Digite o valor do pagamento</label>
+                <div class="editor-field">
+                    @Html.EditorFor(model => Model.valor)
+                </div>
+                <div class="text-danger">
+                    @Html.ValidationMessageFor(model => Model.valor, "", new { @class = "text-danger" })
+                </div>
+                <div align="center">
+                    <button input type="submit" class="btn-success btn-lg" id="confirmar"> Confirmar </button>
+                </div>
+            </div>
+        </fieldset>
+    }
+
+<div align="center">
+    <a href="@Url.Action("Pagamento", "Transacoes", new {numero = Model.numConta, errorMsg = ""})"> <button class="btn-primary btn-lg" style="margin-top: 10%;">Voltar</button> </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

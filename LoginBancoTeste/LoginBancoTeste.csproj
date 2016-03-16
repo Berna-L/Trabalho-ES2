@@ -186,6 +186,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Auxiliares\Util.cs" />
     <Compile Include="Controllers\AutenticadorController.cs" />
+    <Compile Include="Controllers\PagamentoSingleton.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContasController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -207,9 +208,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cheque.cs" />
-    <Compile Include="Models\Agencia.cs" />
     <Compile Include="Models\Banco.cs" />
+    <Compile Include="Models\Agencia.cs" />
+    <Compile Include="Models\Pagamento.cs" />
+    <Compile Include="Models\Cheque.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\ViewModels\EmChequeViewModel.cs" />
     <Compile Include="Migrations\201602222317485_first.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Models\Investimento.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\ViewModels\PagamentoViewModel.cs" />
     <Compile Include="Models\Estoque.cs" />
     <Compile Include="Models\Extrato.cs" />
     <Compile Include="Models\TipoInvestimento.cs" />
@@ -396,6 +399,11 @@
     <Content Include="Views\Transacoes\Saque.cshtml" />
     <Content Include="Views\Transacoes\Opcoes.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Transacoes\PgmtoVerifica.cshtml" />
+    <Content Include="Views\Transacoes\PgmtoConfirma.cshtml" />
+    <Content Include="Views\Transacoes\PgmtoVencido.cshtml" />
+    <Content Include="Views\Transacoes\PgmtoVlrVenc.cshtml" />
+    <Content Include="Views\Transacoes\Pagamento.cshtml" />
     <Content Include="Views\Transacoes\ImpCheques.cshtml" />
     <Content Include="Views\Transacoes\EmissaoCheque.cshtml" />
     <Content Include="Views\Transacoes\SaqueConfirm.cshtml" />
