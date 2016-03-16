@@ -79,9 +79,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\AutenticadorControllerTest.cs" />
+    <Compile Include="TestesFuncionais\Login.cs" />
+    <Compile Include="TestesFuncionais\Saldo.cs" />
     <Compile Include="WebServer.cs" />
-    <Compile Include="Controllers\ClientesControllerTests.cs" />
+    <Compile Include="TestesFuncionais\ListarClientes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

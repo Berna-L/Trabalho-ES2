@@ -235,6 +235,20 @@ namespace LoginBancoTeste.DAL
             investimentos.ForEach(i => context.Investimentos.Add(i));
             context.SaveChanges();
 
+            var notas = new List<Estoque> {
+                new Estoque{
+                    EstoqueID = 1,
+                    QtdNotas10 = 100,
+                    QtdNotas20 = 100,
+                    QtdNotas50 = 100,
+                    QtdNotas100 = 100
+                }
+            };
+
+            notas.ForEach(e=> context.Estoque.Add(e));
+            context.SaveChanges();
+
+
             base.Seed(context);
         }
     }

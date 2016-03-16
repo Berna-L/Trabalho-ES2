@@ -44,7 +44,7 @@ namespace SeleniumTests
             Assert.AreEqual("", verificationErrors.ToString());
         }
         [Test]
-        public void TheLoginTest()
+        public void LoginTest()
         {
             driver.Navigate().GoToUrl(baseURL + "/");
             driver.FindElement(By.LinkText("Sign in")).Click();
