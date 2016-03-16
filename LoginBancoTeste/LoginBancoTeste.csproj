@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201603151940061_AddNewPropertiesToProject.Designer.cs">
       <DependentUpon>201603151940061_AddNewPropertiesToProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603160126044_AddPagamentos.cs" />
+    <Compile Include="Migrations\201603160126044_AddPagamentos.Designer.cs">
+      <DependentUpon>201603160126044_AddPagamentos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\EntradaSaqueViewModel.cs" />
     <Compile Include="Models\ViewModels\EstoqueViewModel.cs" />
     <Compile Include="Controllers\InvestimentosController.cs" />
@@ -458,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603151940061_AddNewPropertiesToProject.resx">
       <DependentUpon>201603151940061_AddNewPropertiesToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603160126044_AddPagamentos.resx">
+      <DependentUpon>201603160126044_AddPagamentos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
